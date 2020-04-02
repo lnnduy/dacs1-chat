@@ -12,7 +12,7 @@
     "backend": "nodemon server/index.js",
     "frontend": "npm run start --prefix client",
     "dev": "concurrently -n server,client -c green,cyan \"npm run backend\" \"npm run start --prefix client\"",
-    "install-client": "cd client && npm install",
+    "install-client": "cd client && yarn install",
     "build": "cd client && npm run build",
     "heroku-postbuild": "npm run install-client && npm run build"
   },
