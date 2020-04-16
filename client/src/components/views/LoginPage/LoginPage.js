@@ -34,7 +34,7 @@ function LoginPage(props) {
           .email("Email không hợp lệ")
           .required("Vui lòng nhập email"),
         password: Yup.string()
-          .min(6, "Mật khẩu phải có ích nhất 6 ký tự")
+          .min(6, "Mật khẩu phải có ít nhất 6 ký tự")
           .required("Vui lòng nhập mật khẩu"),
       })}
       onSubmit={(values, { setSubmitting }) => {
