@@ -7,7 +7,7 @@ export const useStyles = makeStyles((theme) => ({
     height: "100vh",
     display: "grid",
     grid: `
-      'left-menu search-container chat-title' 71px
+      'left-menu search-container chat-title' 85px
       'left-menu conversation-list chat-message-list' 1fr
       'left-menu conversation-list chat-form' 78px
       / 275px 1fr
