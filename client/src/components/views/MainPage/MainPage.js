@@ -1,20 +1,25 @@
 import React from "react";
-import useStyles from "./styles";
-import { Typography } from "@material-ui/core";
+import { useStyles, useStylesSmall } from "./styles";
+import { useMediaQuery } from "@material-ui/core";
+
+import LeftMenu from "../../LeftMenu/LeftMenu";
+import SearchContainer from "../../SearchContainer/SearchContainer";
+import ConversationList from "../../ConversationList/ConversationList";
+import ConversationView from "../../ConversationView/ConversationView";
 
 function MainPage(props) {
-  const classes = useStyles(props);
+  const smallStyles = useStylesSmall(props);
+  const styles = useStyles(props);
+
+  const isSmall = !useMediaQuery("(min-width:740px)");
+  const classes = isSmall ? smallStyles : styles;
+
   return (
     <div className={classes.chatContainer}>
-      <div className={classes.searchContainer}></div>
-      <div className={classes.chatTitle}>
-        <Typography variant="h4" bold>
-          Duỹ
-        </Typography>
-      </div>
-      <div className={classes.conversationList}></div>
-      <div className={classes.chatMessageList}></div>
-      <div className={classes.chatForm}></div>
+      <LeftMenu />
+      <SearchContainer />
+      <ConversationList />
+      <ConversationView />
     </div>
   );
 }

@@ -3,10 +3,15 @@ import { withRouter } from "react-router-dom";
 import { loginUser } from "../../../_actions/user_actions";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { Form, Icon, Input, Button, Checkbox, Typography } from "antd";
+import {
+  Icon,
+  Button,
+  Checkbox,
+  TextField,
+  FormControlLabel,
+} from "@material-ui/core";
 import { useDispatch } from "react-redux";
-
-const { Title } = Typography;
+import { Link } from "react-router-dom";
 
 function LoginPage(props) {
   const dispatch = useDispatch();
@@ -49,7 +54,7 @@ function LoginPage(props) {
               if (response.payload.loginSuccess) {
                 window.localStorage.setItem("userId", response.payload.userId);
                 if (rememberMe === true) {
-                  window.localStorage.setItem("rememberMe", values.id);
+                  window.localStorage.setItem("rememberMe", values.email);
                 } else {
                   localStorage.removeItem("rememberMe");
                 }
@@ -73,62 +78,58 @@ function LoginPage(props) {
           values,
           touched,
           errors,
-          dirty,
           isSubmitting,
           handleChange,
           handleBlur,
           handleSubmit,
-          handleReset,
         } = props;
         return (
           <div className="app">
-            <Title level={2}>Đăng nhập</Title>
+            <h2>Đăng nhập</h2>
             <form onSubmit={handleSubmit} style={{ width: "350px" }}>
-              <Form.Item required>
-                <Input
-                  id="email"
-                  prefix={
-                    <Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
-                  }
-                  placeholder="Nhập email"
-                  type="email"
-                  value={values.email}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  autoFocus
-                  className={
-                    errors.email && touched.email
-                      ? "text-input error"
-                      : "text-input"
-                  }
-                />
-                {errors.email && touched.email && (
-                  <div className="input-feedback">{errors.email}</div>
-                )}
-              </Form.Item>
-
-              <Form.Item required>
-                <Input
-                  id="password"
-                  prefix={
-                    <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
-                  }
-                  placeholder="Nhập mật khẩu"
-                  type="password"
-                  value={values.password}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className={
-                    errors.password && touched.password
-                      ? "text-input error"
-                      : "text-input"
-                  }
-                />
-                {errors.password && touched.password && (
-                  <div className="input-feedback">{errors.password}</div>
-                )}
-              </Form.Item>
-
+              <TextField
+                id="email"
+                variant="outlined"
+                size="small"
+                fullWidth
+                style={{ marginBottom: 15 }}
+                placeholder="Nhập email"
+                type="email"
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                autoFocus
+                className={
+                  errors.email && touched.email
+                    ? "text-input error"
+                    : "text-input"
+                }
+                error={errors.email && touched.email}
+                helperText={errors.email && touched.email && errors.email}
+              />
+              <TextField
+                id="password"
+                variant="outlined"
+                size="small"
+                fullWidth
+                prefix={
+                  <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
+                }
+                placeholder="Nhập mật khẩu"
+                type="password"
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={
+                  errors.password && touched.password
+                    ? "text-input error"
+                    : "text-input"
+                }
+                error={errors.password && touched.password}
+                helperText={
+                  errors.password && touched.password && errors.password
+                }
+              />
               {formErrorMessage && (
                 <label>
                   <p
@@ -144,36 +145,37 @@ function LoginPage(props) {
                   </p>
                 </label>
               )}
-
-              <Form.Item>
-                <Checkbox
-                  id="rememberMe"
-                  onChange={handleRememberMe}
-                  checked={rememberMe}
-                >
-                  Nhớ mật khẩu
-                </Checkbox>
-                <a
-                  className="login-form-forgot"
-                  href="/reset_user"
-                  style={{ float: "right" }}
-                >
-                  Quên mật khẩu?
-                </a>
-                <div>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    className="login-form-button"
-                    style={{ minWidth: "100%" }}
-                    disabled={isSubmitting}
-                    onSubmit={handleSubmit}
-                  >
-                    Đăng nhập
-                  </Button>
-                </div>
-                Hoặc <a href="/register">đăng ký tài khoản</a>
-              </Form.Item>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    id="rememberMe"
+                    onChange={handleRememberMe}
+                    checked={rememberMe}
+                    color="default"
+                  />
+                }
+                label="Ghi nhớ mật khẩu"
+                style={{ color: "gray" }}
+              />
+              <Link
+                className="login-form-forgot"
+                to="/reset_user"
+                style={{ float: "right" }}
+              >
+                Quên mật khẩu?
+              </Link>
+              <Button
+                variant="contained"
+                htmlType="submit"
+                className="login-form-button"
+                fullWidth
+                color="primary"
+                disabled={isSubmitting}
+                onClick={handleSubmit}
+              >
+                Đăng nhập
+              </Button>
+              Hoặc <Link to="/register">đăng ký tài khoản</Link>
             </form>
           </div>
         );

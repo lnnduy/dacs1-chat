@@ -4,8 +4,8 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { registerUser } from "../../../_actions/user_actions";
 import { useDispatch } from "react-redux";
-
-import { Form, Input, Button } from "antd";
+import { Link } from "react-router-dom";
+import { TextField, Button } from "@material-ui/core";
 
 const formItemLayout = {
   labelCol: {
@@ -87,111 +87,104 @@ function RegisterPage(props) {
         return (
           <div className="app">
             <h2>Đăng ký</h2>
-            <Form
-              style={{ minWidth: "375px" }}
+            <form
+              style={{ maxWidth: "375px" }}
               {...formItemLayout}
               onSubmit={handleSubmit}
             >
-              <Form.Item required label="Tên hiển thị">
-                <Input
-                  id="name"
-                  placeholder="Nhập tên"
-                  type="text"
-                  value={values.name}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className={
-                    errors.name && touched.name
-                      ? "text-input error"
-                      : "text-input"
-                  }
-                />
-                {errors.name && touched.name && (
-                  <div className="input-feedback">{errors.name}</div>
-                )}
-              </Form.Item>
-
-              <Form.Item
-                required
-                label="Email"
-                hasFeedback
-                validateStatus={
-                  errors.email && touched.email ? "error" : "success"
+              <TextField
+                id="name"
+                variant="outlined"
+                size="small"
+                fullWidth
+                placeholder="Nhập tên"
+                type="text"
+                style={{ marginBottom: 15 }}
+                value={values.name}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={
+                  errors.name && touched.name
+                    ? "text-input error"
+                    : "text-input"
                 }
-              >
-                <Input
-                  id="email"
-                  placeholder="Nhập email"
-                  type="email"
-                  value={values.email}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className={
-                    errors.email && touched.email
-                      ? "text-input error"
-                      : "text-input"
-                  }
-                />
-                {errors.email && touched.email && (
-                  <div className="input-feedback">{errors.email}</div>
-                )}
-              </Form.Item>
-
-              <Form.Item
-                required
-                label="Mật khẩu"
-                hasFeedback
-                validateStatus={
-                  errors.password && touched.password ? "error" : "success"
+                error={errors.name && touched.name}
+                helperText={errors.name && touched.name && errors.name}
+              />
+              <TextField
+                id="email"
+                variant="outlined"
+                size="small"
+                fullWidth
+                style={{ marginBottom: 15 }}
+                placeholder="Nhập email"
+                type="email"
+                value={values.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={
+                  errors.email && touched.email
+                    ? "text-input error"
+                    : "text-input"
                 }
+                error={errors.email && touched.email}
+                helperText={errors.email && touched.email && errors.email}
+              />
+              <TextField
+                id="password"
+                variant="outlined"
+                size="small"
+                fullWidth
+                placeholder="Nhập mật khẩu"
+                type="password"
+                style={{ marginBottom: 15 }}
+                value={values.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={
+                  errors.password && touched.password
+                    ? "text-input error"
+                    : "text-input"
+                }
+                error={errors.password && touched.password}
+                helperText={
+                  errors.password && touched.password && errors.password
+                }
+              />
+              <TextField
+                id="confirmPassword"
+                variant="outlined"
+                size="small"
+                fullWidth
+                placeholder="Nhập lại mật khẩu"
+                type="password"
+                style={{ marginBottom: 15 }}
+                value={values.confirmPassword}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                className={
+                  errors.confirmPassword && touched.confirmPassword
+                    ? "text-input error"
+                    : "text-input"
+                }
+                error={errors.confirmPassword && touched.confirmPassword}
+                helperText={
+                  errors.confirmPassword &&
+                  touched.confirmPassword &&
+                  errors.confirmPassword
+                }
+              />
+              <Button
+                onClick={handleSubmit}
+                variant="contained"
+                color="primary"
+                fullWidth
+                disabled={isSubmitting}
               >
-                <Input
-                  id="password"
-                  placeholder="Nhập mật khẩu"
-                  type="password"
-                  value={values.password}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className={
-                    errors.password && touched.password
-                      ? "text-input error"
-                      : "text-input"
-                  }
-                />
-                {errors.password && touched.password && (
-                  <div className="input-feedback">{errors.password}</div>
-                )}
-              </Form.Item>
-
-              <Form.Item required label="Nhập lại mật khẩu" hasFeedback>
-                <Input
-                  id="confirmPassword"
-                  placeholder="Nhập lại mật khẩu"
-                  type="password"
-                  value={values.confirmPassword}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  className={
-                    errors.confirmPassword && touched.confirmPassword
-                      ? "text-input error"
-                      : "text-input"
-                  }
-                />
-                {errors.confirmPassword && touched.confirmPassword && (
-                  <div className="input-feedback">{errors.confirmPassword}</div>
-                )}
-              </Form.Item>
-
-              <Form.Item {...tailFormItemLayout}>
-                <Button
-                  onClick={handleSubmit}
-                  type="primary"
-                  disabled={isSubmitting}
-                >
-                  Đăng ký
-                </Button>
-              </Form.Item>
-            </Form>
+                Đăng ký
+              </Button>
+              Hoặc <Link to="/login">đăng nhập</Link> vào tài khoản đã có
+            </form>
           </div>
         );
       }}
