@@ -31,7 +31,6 @@ export function loginUser(dataToSubmit) {
 }
 
 export function loginSuccess(userData) {
-  console.log(userData);
   return { type: LOGIN_SUCCESS, payload: userData };
 }
 

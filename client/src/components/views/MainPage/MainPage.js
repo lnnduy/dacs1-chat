@@ -1,6 +1,7 @@
 import React from "react";
-import { useStyles, useStylesSmall } from "./styles";
 import { useMediaQuery } from "@material-ui/core";
+
+import useStyles from "./styles";
 
 import LeftMenu from "../../LeftMenu/LeftMenu";
 import SearchContainer from "../../SearchContainer/SearchContainer";
@@ -8,15 +9,12 @@ import ConversationList from "../../ConversationList/ConversationList";
 import ConversationView from "../../ConversationView/ConversationView";
 
 function MainPage(props) {
-  const smallStyles = useStylesSmall(props);
-  const styles = useStyles(props);
-
   const isSmall = !useMediaQuery("(min-width:740px)");
-  const classes = isSmall ? smallStyles : styles;
+  const classes = useStyles(isSmall)(props);
 
   return (
     <div className={classes.chatContainer}>
-      <LeftMenu />
+      {!isSmall && <LeftMenu />}
       <SearchContainer />
       <ConversationList />
       <ConversationView />
