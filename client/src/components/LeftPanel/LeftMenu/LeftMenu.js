@@ -1,8 +1,8 @@
 import React from "react";
 import { useMediaQuery, Avatar } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import { ExitToApp, Chat, Contacts } from "@material-ui/icons";
 import { useHistory } from "react-router-dom";
+import { ExitToApp, ChatOutlined, ContactsOutlined } from "@material-ui/icons";
 
 import useStyles from "./styles";
 import MenuItem from "./MenuItem";
@@ -35,13 +35,13 @@ function LeftMenu(props) {
         <div className={classes.top}>
           <MenuItem
             isSelect={selectedMenuItemCode === MENU_ITEMS.CHAT}
-            Icon={Chat}
+            Icon={ChatOutlined}
             title="Trò chuyện"
             onClick={() => dispatch(selectMenuItem(MENU_ITEMS.CHAT))}
           />
           <MenuItem
             isSelect={selectedMenuItemCode === MENU_ITEMS.CONTACTS}
-            Icon={Contacts}
+            Icon={ContactsOutlined}
             title="Danh bạ"
             onClick={() => dispatch(selectMenuItem(MENU_ITEMS.CONTACTS))}
           />
