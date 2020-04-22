@@ -10,7 +10,7 @@ import {
   MESSAGE_TYPES,
 } from "../../shared/contants";
 
-function ConversationView(props) {
+function RightPanel(props) {
   const selectedConversation = {
     type: CONVERSATION_TYPES.PRIVATE,
     peoples: [
@@ -46,4 +46,4 @@ function ConversationView(props) {
   );
 }
 
-export default ConversationView;
+export default RightPanel;

@@ -4,7 +4,7 @@ import { useMediaQuery } from "@material-ui/core";
 
 function ConversationList(props) {
   const classes = useStyles(!useMediaQuery("(min-width:740px)"))(props);
-  return <div className={classes.conversationList}></div>;
+  return <div className={classes.conversationList}>ConversationList</div>;
 }
 
 export default ConversationList;

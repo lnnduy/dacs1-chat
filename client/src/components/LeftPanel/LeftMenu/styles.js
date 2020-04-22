@@ -9,6 +9,7 @@ export const useMenuItemStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    color: "white",
     "&:hover": {
       cursor: "pointer",
       backgroundColor: "#0002",
@@ -31,19 +32,25 @@ export const useMenuItemStyles = makeStyles((theme) => ({
 const largeScreenStyles = {
   leftMenu: {
     gridArea: "left-menu",
-    background: "linear-gradient(0deg, #0cb3ff, #0068ff)",
+    background: "linear-gradient(180deg, #0cb3ff, #0068ff)",
+  },
+  navContainer: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-  },
-  navContainer: {
     width: "100%",
-    height: "calc(100vh - 0px)",
-    paddingTop: 100,
+    height: "calc(100vh - 84px)",
   },
   top: {},
   bottom: {},
-  userAvatar: {},
+  userAvatar: {
+    width: LEFT_MENU_WIDTH,
+    height: LEFT_MENU_WIDTH,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 17,
+  },
   square: {
     width: "100%",
     height: LEFT_MENU_WIDTH,

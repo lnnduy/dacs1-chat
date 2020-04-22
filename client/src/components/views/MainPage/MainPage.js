@@ -3,10 +3,8 @@ import { useMediaQuery } from "@material-ui/core";
 
 import useStyles from "./styles";
 
-import LeftMenu from "../../LeftMenu/LeftMenu";
-import SearchContainer from "../../SearchContainer/SearchContainer";
-import ConversationList from "../../ConversationList/ConversationList";
-import ConversationView from "../../ConversationView/ConversationView";
+import LeftPanel from "../../LeftPanel/LeftPanel";
+import RightPanel from "../../RightPanel/RightPanel";
 
 function MainPage(props) {
   const isSmall = !useMediaQuery("(min-width:740px)");
@@ -14,10 +12,8 @@ function MainPage(props) {
 
   return (
     <div className={classes.chatContainer}>
-      {!isSmall && <LeftMenu />}
-      <SearchContainer />
-      <ConversationList />
-      <ConversationView />
+      <LeftPanel />
+      <RightPanel />
     </div>
   );
 }

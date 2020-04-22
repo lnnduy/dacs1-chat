@@ -1,16 +1,18 @@
 import { makeStyles } from "@material-ui/core";
 
 const largeScreenStyles = {
-  chatTitle: {
-    gridArea: "chat-title",
-    backgroundColor: "#fff",
-    color: "#232323",
-    borderBottom: "1px solid rgba(0, 0, 0, 0.25)",
-    borderLeft: "1px solid rgba(0, 0, 0, 0.25)",
+  conversationList: {
+    gridArea: "conversation-list",
+    background: "#fff",
   },
 };
 
-const smallScreenStyles = largeScreenStyles;
+const smallScreenStyles = {
+  conversationList: {
+    gridArea: "conversation-list",
+    background: "#fff",
+  },
+};
 
 const useStyles = (isSmall) =>
   isSmall
