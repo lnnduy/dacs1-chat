@@ -5,8 +5,8 @@ const largeScreenStyles = {
     gridArea: "chat-title",
     backgroundColor: "#fff",
     color: "#232323",
-    borderBottom: "1px solid rgba(0, 0, 0, 0.25)",
-    borderLeft: "1px solid rgba(0, 0, 0, 0.25)",
+    borderBottom: "1px solid rgba(0, 0, 0, 0.1)",
+    borderLeft: "1px solid rgba(0, 0, 0, 0.1)",
   },
 };
 

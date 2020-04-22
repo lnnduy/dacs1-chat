@@ -4,7 +4,7 @@ const largeScreenStyles = {
   searchContainer: {
     gridArea: "search-container",
     background: "#fff",
-    borderBottom: "1px solid rgba(0, 0, 0, 0.25)",
+    borderBottom: "1px solid rgba(0, 0, 0, 0.1)",
     zIndex: 1,
     display: "flex",
     flexWrap: "wrap",
@@ -20,7 +20,7 @@ const smallScreenStyles = {
   searchContainer: {
     gridArea: "search-container",
     background: "#fff",
-    borderBottom: "1px solid rgba(0, 0, 0, 0.25)",
+    borderBottom: "1px solid rgba(0, 0, 0, 0.1)",
     zIndex: 1,
     display: "flex",
     flexWrap: "wrap",

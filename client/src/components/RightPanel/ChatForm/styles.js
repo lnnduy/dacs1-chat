@@ -4,8 +4,8 @@ const largeScreenStyles = {
   chatForm: {
     gridArea: "chat-form",
     backgroundColor: "#fff",
-    borderTop: "1px solid rgba(0, 0, 0, 0.25)",
-    borderLeft: "1px solid rgba(0, 0, 0, 0.25)",
+    borderTop: "1px solid rgba(0, 0, 0, 0.1)",
+    borderLeft: "1px solid rgba(0, 0, 0, 0.1)",
   },
 };
 
