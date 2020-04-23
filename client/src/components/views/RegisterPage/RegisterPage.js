@@ -2,7 +2,7 @@ import React from "react";
 import moment from "moment";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { registerUser } from "../../../_actions/user_actions";
+import { registerUser } from "../../../functions/user";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { TextField, Button } from "@material-ui/core";
@@ -63,10 +63,10 @@ function RegisterPage(props) {
           };
 
           dispatch(registerUser(dataToSubmit)).then((response) => {
-            if (response.payload.success) {
+            if (response.success) {
               props.history.push("/login");
             } else {
-              alert(response.payload.err.errmsg);
+              alert(response.err.errmsg);
             }
           });
 

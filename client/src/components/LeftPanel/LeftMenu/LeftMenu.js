@@ -6,7 +6,7 @@ import { ExitToApp, ChatOutlined, ContactsOutlined } from "@material-ui/icons";
 
 import useStyles from "./styles";
 import MenuItem from "./MenuItem";
-import { logoutUser } from "../../../_actions/user_actions";
+import { logoutUser } from "../../../functions/user";
 import { selectMenuItem } from "../../../_actions/left_menu_actions";
 
 import { MENU_ITEMS } from "../../../_actions/types";
@@ -51,7 +51,7 @@ function LeftMenu(props) {
             Icon={ExitToApp}
             title="Đăng xuất"
             onClick={() => {
-              dispatch(logoutUser()).then(() => history.push("/login"));
+              logoutUser().then(() => history.push("/login"));
             }}
           />
         </div>

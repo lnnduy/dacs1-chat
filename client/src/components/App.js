@@ -11,11 +11,13 @@ import MainPage from "./views/MainPage/MainPage";
 function App() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <Switch>
-        <Route exact path="/" component={Auth(MainPage, true)} />
-        <Route exact path="/login" component={Auth(LoginPage, false)} />
-        <Route exact path="/register" component={Auth(RegisterPage, false)} />
-      </Switch>
+      <Provider store={store}>
+        <Switch>
+          <Route exact path="/" component={Auth(MainPage, true)} />
+          <Route exact path="/login" component={Auth(LoginPage, false)} />
+          <Route exact path="/register" component={Auth(RegisterPage, false)} />
+        </Switch>
+      </Provider>
     </Suspense>
   );
 }

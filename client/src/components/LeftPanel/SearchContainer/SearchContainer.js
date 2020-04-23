@@ -20,7 +20,7 @@ function SearchContainer(props) {
     <div className={classes.searchContainer}>
       {(isSmall && <div></div>) || (
         <>
-          <Typography variant="subtitle2" noWrap display="inline">
+          <Typography variant="subtitle2" noWrap>
             {user?.name || ""}
           </Typography>
           <TextField

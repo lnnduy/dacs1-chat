@@ -6,8 +6,6 @@ const largeScreenStyles = {
     background: "#fff",
     borderBottom: "1px solid rgba(0, 0, 0, 0.1)",
     zIndex: 1,
-    display: "flex",
-    flexWrap: "wrap",
     padding: 10,
   },
   searchBar: {

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
-import { loginUser } from "../../../_actions/user_actions";
+import { loginUser } from "../../../functions/user";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import {
@@ -49,11 +49,10 @@ function LoginPage(props) {
             password: values.password,
           };
 
-          dispatch(loginUser(dataToSubmit))
+          loginUser(dataToSubmit)
             .then((response) => {
-              if (response.payload.loginSuccess) {
-                // dispacth(loginSuccess(response.payload));
-                window.localStorage.setItem("userId", response.payload.userId);
+              if (response.loginSuccess) {
+                window.localStorage.setItem("userId", response.userId);
                 if (rememberMe === true) {
                   window.localStorage.setItem("rememberMe", values.email);
                 } else {
