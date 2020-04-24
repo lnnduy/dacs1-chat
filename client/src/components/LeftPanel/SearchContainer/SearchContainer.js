@@ -14,7 +14,7 @@ import "./styles.css";
 function SearchContainer(props) {
   const isSmall = !useMediaQuery("(min-width:740px)");
   const classes = useStyles(isSmall)(props);
-  const user = useSelector((states) => states.user).userData;
+  const user = useSelector((states) => states.user).user;
 
   return (
     <div className={classes.searchContainer}>

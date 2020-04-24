@@ -16,15 +16,14 @@ function LeftMenu(props) {
   const classes = useStyles(isSmall)(props);
   const dispatch = useDispatch();
   const history = useHistory();
-  const { userData } = useSelector((store) => store.user);
-
+  const { user } = useSelector((store) => store.user);
   const { selectedMenuItemCode } = useSelector((store) => store.leftMenu);
 
   return (
     <div className={classes.leftMenu}>
       <div className={classes.userAvatar}>
         <Avatar
-          src={userData?.image}
+          src={user?.image}
           style={{
             borderRadius: "100%",
             border: "2px white solid",

@@ -1,12 +1,5 @@
 import axios from "axios";
 import { USER_SERVER } from "../components/Config.js";
-import {
-  LOGIN_USER,
-  REGISTER_USER,
-  AUTH_USER,
-  LOGOUT_USER,
-  LOGIN_SUCCESS,
-} from "../_actions/types";
 
 export function loginUser(dataToSubmit) {
   return axios

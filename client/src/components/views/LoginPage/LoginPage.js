@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
-import { loginUser } from "../../../functions/user";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import {
@@ -12,6 +11,9 @@ import {
 } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+
+import { loginUser } from "../../../functions/user";
+import { updateUserData } from "../../../_actions/user_actions";
 
 function LoginPage(props) {
   const dispatch = useDispatch();
@@ -27,6 +29,30 @@ function LoginPage(props) {
   const initialEmail = localStorage.getItem("rememberMe")
     ? localStorage.getItem("rememberMe")
     : "";
+
+  const login = (values, dataToSubmit) => {
+    loginUser(dataToSubmit)
+      .then((response) => {
+        if (response.loginSuccess) {
+          dispatch(updateUserData(response));
+          window.localStorage.setItem("userId", response.userId);
+          if (rememberMe === true) {
+            window.localStorage.setItem("rememberMe", values.email);
+          } else {
+            localStorage.removeItem("rememberMe");
+          }
+          props.history.push("/");
+        } else {
+          setFormErrorMessage("Kiểm tra lại email hoặc mật khẩu");
+        }
+      })
+      .catch((err) => {
+        setFormErrorMessage("Kiểm tra lại email hoặc mật khẩu");
+        setTimeout(() => {
+          setFormErrorMessage("");
+        }, 3000);
+      });
+  };
 
   return (
     <Formik
@@ -48,27 +74,7 @@ function LoginPage(props) {
             email: values.email,
             password: values.password,
           };
-
-          loginUser(dataToSubmit)
-            .then((response) => {
-              if (response.loginSuccess) {
-                window.localStorage.setItem("userId", response.userId);
-                if (rememberMe === true) {
-                  window.localStorage.setItem("rememberMe", values.email);
-                } else {
-                  localStorage.removeItem("rememberMe");
-                }
-                props.history.push("/");
-              } else {
-                setFormErrorMessage("Kiểm tra lại email hoặc mật khẩu");
-              }
-            })
-            .catch((err) => {
-              setFormErrorMessage("Kiểm tra lại email hoặc mật khẩu");
-              setTimeout(() => {
-                setFormErrorMessage("");
-              }, 3000);
-            });
+          login(values, dataToSubmit);
           setSubmitting(false);
         }, 500);
       }}

@@ -1,16 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import { auth } from "../functions/user";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+import { clearUserData, updateUserData } from "../_actions/user_actions";
 
 export default function (ComposedClass, reload, adminRoute = null) {
   function AuthenticationCheck(props) {
-    let user = useSelector((state) => state.user);
     const dispatch = useDispatch();
 
     useEffect(() => {
       auth().then((response) => {
         if (!response.isAuth) {
+          dispatch(clearUserData());
           if (reload) {
             props.history.push("/login");
           }
@@ -22,6 +23,7 @@ export default function (ComposedClass, reload, adminRoute = null) {
               props.history.push("/");
             }
           }
+          dispatch(updateUserData(response));
         }
       });
     }, []);

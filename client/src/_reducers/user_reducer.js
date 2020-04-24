@@ -1,23 +1,13 @@
-import {
-  LOGIN_USER,
-  REGISTER_USER,
-  AUTH_USER,
-  LOGOUT_USER,
-  LOGIN_SUCCESS,
-} from "../_actions/types";
+import { UPDATE_USER_DATA, CLEAR_USER_DATA } from "../_actions/types";
 
 export default function (state = {}, action) {
   switch (action.type) {
-    case REGISTER_USER:
-      return { ...state, register: action.payload };
-    case LOGIN_USER:
-      return { ...state, loginSucces: action.payload };
-    case AUTH_USER:
-      return { ...state, userData: action.payload };
-    case LOGIN_SUCCESS:
-      return { ...state, userData: action.payload };
-    case LOGOUT_USER:
-      return { ...state };
+    case UPDATE_USER_DATA:
+      state = { ...state, user: { ...action.payload } };
+      return state;
+    case CLEAR_USER_DATA:
+      console.log("clear");
+      return { ...state, user: null };
     default:
       return state;
   }

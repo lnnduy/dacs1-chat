@@ -1,12 +1,9 @@
-import axios from "axios";
-import {
-  LOGIN_USER,
-  REGISTER_USER,
-  AUTH_USER,
-  LOGOUT_USER,
-  LOGIN_SUCCESS,
-} from "./types";
+import { UPDATE_USER_DATA, CLEAR_USER_DATA } from "./types";
 
-export function loginSuccess(userData) {
-  return { type: LOGIN_SUCCESS, payload: userData };
+export function updateUserData(userData) {
+  return { type: UPDATE_USER_DATA, payload: userData };
+}
+
+export function clearUserData() {
+  return { type: CLEAR_USER_DATA };
 }
