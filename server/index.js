@@ -1,18 +1,20 @@
 const express = require("express");
 const app = express();
+const http = require("http");
 const path = require("path");
 const cors = require("cors");
+
+const server = http.createServer(app);
+const io = require("socket.io")(server);
 
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 
 const config = require("./config/key");
 
-// const mongoose = require("mongoose");
-// mongoose
-//   .connect(config.mongoURI, { useNewUrlParser: true })
-//   .then(() => console.log("DB connected"))
-//   .catch(err => console.error(err));
+io.on("connection", (socket) => {
+  console.log("One user connected");
+});
 
 const mongoose = require("mongoose");
 const connect = mongoose
@@ -20,10 +22,10 @@ const connect = mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
-    useFindAndModify: false
+    useFindAndModify: false,
   })
   .then(() => console.log("MongoDB Connected..."))
-  .catch(err => console.log(err));
+  .catch((err) => console.log(err));
 
 app.use(cors());
 
@@ -32,6 +34,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use("/api/users", require("./routes/users"));
+app.use("/api/conversations", require("./routes/conversation"));
 
 app.use("/uploads", express.static("uploads"));
 
@@ -45,6 +48,6 @@ if (process.env.NODE_ENV === "production") {
 
 const port = process.env.PORT || 5000;
 
-app.listen(port, () => {
+server.listen(port, () => {
   console.log(`Server Running at ${port}`);
 });
