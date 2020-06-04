@@ -4,38 +4,46 @@ const saltRounds = 10;
 const jwt = require("jsonwebtoken");
 const moment = require("moment");
 
-const userSchema = mongoose.Schema({
-  name: {
-    type: String,
-    maxlength: 50,
+const userSchema = mongoose.Schema(
+  {
+    name: {
+      type: String,
+      maxlength: 50,
+    },
+    email: {
+      type: String,
+      trim: true,
+      unique: 1,
+    },
+    password: {
+      type: String,
+      minglength: 5,
+    },
+    role: {
+      type: Number,
+      default: 0,
+    },
+    avatar: String,
+    token: {
+      type: String,
+    },
+    tokenExp: {
+      type: Number,
+    },
+    contacts: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user",
+    },
   },
-  email: {
-    type: String,
-    trim: true,
-    unique: 1,
-  },
-  password: {
-    type: String,
-    minglength: 5,
-  },
-  role: {
-    type: Number,
-    default: 0,
-  },
-  image: String,
-  token: {
-    type: String,
-  },
-  tokenExp: {
-    type: Number,
-  },
-});
+  {
+    versionKey: false,
+  }
+);
 
 userSchema.pre("save", function (next) {
   var user = this;
 
   if (user.isModified("password")) {
-    // console.log('password changed')
     bcrypt.genSalt(saltRounds, function (err, salt) {
       if (err) return next(err);
 
@@ -81,6 +89,6 @@ userSchema.statics.findByToken = function (token, cb) {
   });
 };
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model("user", userSchema);
 
 module.exports = User;

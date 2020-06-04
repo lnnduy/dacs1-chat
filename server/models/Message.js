@@ -1,13 +1,21 @@
-const { model, Schema } = require("mongoose");
+const { Schema, model } = require("mongoose");
 
-const messageModel = Schema({
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
+const messageSchema = Schema(
+  {
+    sender: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+    },
+    type: String,
+    content: String,
+    sendAt: {
+      type: Date,
+      default: Date.now(),
+    },
   },
-  content: String,
-});
+  {
+    versionKey: false,
+  }
+);
 
-const Message = model("Message", messageModel);
-
-module.exports = Message;
+module.exports = model("message", messageSchema);

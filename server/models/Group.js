@@ -1,21 +1,25 @@
-const { model, Schema } = require("mongoose");
+const { Schema, model } = require("mongoose");
 
-const groupSchema = Schema({
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
+const groupSchema = Schema(
+  {
+    name: String,
+    avatar: String,
+    members: {
+      type: [Schema.Types.ObjectId],
+      ref: "user",
+    },
+    moderators: {
+      type: [Schema.Types.ObjectId],
+      ref: "user",
+    },
+    admin: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+    },
   },
-  lastMessageAt: {
-    type: Date,
-    default: Date.now,
-  },
-  messages: {
-    type: [Schema.Types.ObjectId],
-    ref: "Message",
-  },
-  isHide: { type: Boolean, default: false },
-});
+  {
+    versionKey: false,
+  }
+);
 
-const Group = model("Group", groupSchema);
-
-module.exports = Group;
+module.exports = model("group", groupSchema);

@@ -1,8 +1,12 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 import ChatTitle from "./ChatTitle/ChatTitle";
 import MessageList from "./MessageList/MessageList";
+import GroupList from "./GroupList/GroupList";
 import ChatForm from "./ChatForm/ChatForm";
+
+import { MENU_ITEMS } from "../../_actions/types";
 
 import {
   CONVERSATION_TYPES,
@@ -11,36 +15,14 @@ import {
 } from "../../shared/contants";
 
 function RightPanel(props) {
-  const selectedConversation = {
-    type: CONVERSATION_TYPES.PRIVATE,
-    peoples: [
-      {
-        id: 1,
-        name: "Dev 1",
-      },
-    ],
-    messages: [
-      {
-        sender: 1,
-        type: MESSAGE_TYPES.TEXT,
-        content: "Hello!",
-        sentAt: 1587280674472,
-        status: MESSAGE_STATUS.SEEN,
-      },
-      {
-        sender: 2,
-        type: MESSAGE_TYPES.TEXT,
-        content: "What's up, bro?",
-        sentAt: 1587281040584,
-        status: MESSAGE_STATUS.RECEIVED,
-      },
-    ],
-  };
+  const { selectedMenuItemCode } = useSelector((store) => store.leftMenu);
 
   return (
     <>
       <ChatTitle />
-      <MessageList />
+      {(selectedMenuItemCode === MENU_ITEMS.CONTACTS && <GroupList />) || (
+        <MessageList />
+      )}
       <ChatForm />
     </>
   );

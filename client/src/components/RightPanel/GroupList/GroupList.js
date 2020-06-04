@@ -1,0 +1,92 @@
+import React, { useState, useEffect } from "react";
+import { useMediaQuery } from "@material-ui/core";
+import { Dropdown, Card, Flex, Avatar, Text } from "@fluentui/react-northstar";
+import axios from "axios";
+
+import useStyles from "./styles";
+
+const FILTERS = {
+  ALL: "Tất cả",
+  MANAGING: "Nhóm tôi đang quản lý",
+};
+const SORT_BY = {
+  NAME_ASC: "Theo tên nhóm (A-Z)",
+  NAME_DESC: "Theo tên nhóm (Z-A)",
+  ACTIVITY_DESC: "Theo hoạt động gần đây (Mới -> Cũ)",
+  ACTIVITY_ASC: "Theo hoạt động gần đây (Cũ -> Mới)",
+};
+
+const filters = [FILTERS.ALL, FILTERS.MANAGING];
+const sorters = [
+  SORT_BY.NAME_ASC,
+  SORT_BY.NAME_DESC,
+  SORT_BY.ACTIVITY_DESC,
+  SORT_BY.ACTIVITY_ASC,
+];
+
+function GroupList(props) {
+  const isSmall = !useMediaQuery("(min-width:740px)");
+  const classes = useStyles(isSmall)(props);
+  const [selectedFilter, setSelectedFilter] = useState(FILTERS.ALL);
+  const [selectedSorter, setSorter] = useState(SORT_BY.NAME_ASC);
+  const [groups, setGroups] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("api/groups")
+      .then((res) => res.data)
+      .then((data) => setGroups(data))
+      .catch((err) => console.log(err));
+  }, []);
+
+  return (
+    <div className={classes.groupList}>
+      <div className={classes.controlsContainer}>
+        <div className={classes.filter}>
+          <Dropdown
+            items={filters}
+            checkable
+            defaultValue={selectedFilter}
+            fluid
+            onChange={(e, data) => setSelectedFilter(data.value)}
+          />
+        </div>
+        <div className={classes.sorter}>
+          <Dropdown
+            items={sorters}
+            checkable
+            align="end"
+            defaultValue={selectedSorter}
+            fluid
+            onChange={(e, data) => setSorter(data.value)}
+          />
+        </div>
+      </div>
+      <div>
+        {groups.map((g, i) => (
+          <Card key={i} className={classes.groupCard}>
+            <Card.Body fitted>
+              <Flex gap="gap.small">
+                <Avatar
+                  className={classes.avatar}
+                  image={g.avatar}
+                  name={g.name}
+                />
+                <Flex column gap="gap.small">
+                  <Text content={g.name} size="small" weight="bold" />
+                  <Text
+                    content={`${g.memberCount} thành viên`}
+                    size="small"
+                    weight="light"
+                  />
+                </Flex>
+              </Flex>
+            </Card.Body>
+          </Card>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default GroupList;
