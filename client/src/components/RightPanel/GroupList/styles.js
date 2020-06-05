@@ -20,12 +20,25 @@ const largeScreenStyles = {
   avatar: {
     border: "1px solid #c9c9c9",
     borderRadius: "100%",
+    width: 30,
+    height: 30,
   },
   groupCard: {
     userSelect: "none",
     "&:hover": {
       cursor: "pointer",
     },
+    marginBottom: 15,
+    width: 200,
+  },
+  addCard: {
+    userSelect: "none",
+    "&:hover": {
+      cursor: "pointer",
+      borderColor: "#007070",
+      backgroundColor: "#00808010",
+    },
+    width: 200,
   },
 };
 

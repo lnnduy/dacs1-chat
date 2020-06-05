@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useMediaQuery } from "@material-ui/core";
 import { Dropdown, Card, Flex, Avatar, Text } from "@fluentui/react-northstar";
+import { TeamCreateIcon } from "@fluentui/react-icons-northstar";
 import axios from "axios";
 
 import useStyles from "./styles";
+import AddGroupDialog from "./AddGroupDialog";
 
 const FILTERS = {
   ALL: "Tất cả",
@@ -30,6 +32,7 @@ function GroupList(props) {
   const [selectedFilter, setSelectedFilter] = useState(FILTERS.ALL);
   const [selectedSorter, setSorter] = useState(SORT_BY.NAME_ASC);
   const [groups, setGroups] = useState([]);
+  const [openAddGroupDialog, setOpenAddGroupDialog] = useState(false);
 
   useEffect(() => {
     axios
@@ -63,28 +66,55 @@ function GroupList(props) {
         </div>
       </div>
       <div>
-        {groups.map((g, i) => (
-          <Card key={i} className={classes.groupCard}>
-            <Card.Body fitted>
-              <Flex gap="gap.small">
-                <Avatar
-                  className={classes.avatar}
-                  image={g.avatar}
-                  name={g.name}
-                />
-                <Flex column gap="gap.small">
-                  <Text content={g.name} size="small" weight="bold" />
-                  <Text
-                    content={`${g.memberCount} thành viên`}
-                    size="small"
-                    weight="light"
-                  />
-                </Flex>
-              </Flex>
-            </Card.Body>
+        <Flex gap="gap.medium" wrap>
+          <Card
+            className={classes.addCard}
+            title="Thêm nhóm mới"
+            styles={{ color: "teal", height: "62.4px", borderColor: "teal" }}
+            onClick={() => setOpenAddGroupDialog(true)}
+          >
+            <Flex hAlign="center" vAlign="center" fill>
+              <Card.Body fitted>
+                <TeamCreateIcon size="large" color="teal" />
+              </Card.Body>
+            </Flex>
           </Card>
-        ))}
+          {groups.map((g, i) => (
+            <Card key={i} className={classes.groupCard}>
+              <Card.Body fitted>
+                <Flex gap="gap.small">
+                  <Flex column gap="gap.small">
+                    <Avatar
+                      className={classes.avatar}
+                      image={g.avatar}
+                      name={g.name}
+                    />
+                  </Flex>
+                  <Flex column gap="gap.small" styles={{ overflow: "hidden" }}>
+                    <Text
+                      content={g.name}
+                      size="small"
+                      weight="bold"
+                      truncated
+                      title={g.name}
+                    />
+                    <Text
+                      content={`${g.memberCount} thành viên`}
+                      size="small"
+                      weight="light"
+                    />
+                  </Flex>
+                </Flex>
+              </Card.Body>
+            </Card>
+          ))}
+        </Flex>
       </div>
+      <AddGroupDialog
+        open={openAddGroupDialog}
+        onClose={() => setOpenAddGroupDialog(false)}
+        onCreateSuccess={(group) => setGroups([group, ...groups])}
+      />
     </div>
   );
 }
