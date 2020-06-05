@@ -1,14 +1,22 @@
 import { makeStyles } from "@material-ui/core";
 
 const largeScreenStyles = {
-  conversationList: {
+  contactLists: {
     gridArea: "conversation-list",
     background: "#fff",
+  },
+  leftMenuCard: {
+    padding: 15,
+    userSelect: "none",
+    "&:hover": {
+      backgroundColor: "#f0f0f0",
+      cursor: "pointer",
+    },
   },
 };
 
 const smallScreenStyles = {
-  conversationList: {
+  contactLists: {
     gridArea: "conversation-list",
     background: "#fff",
   },

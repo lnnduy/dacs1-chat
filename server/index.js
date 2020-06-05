@@ -4,7 +4,7 @@ const http = require("http");
 const path = require("path");
 const cors = require("cors");
 
-const server = http.createServer(app);
+const server = http.Server(app);
 const io = require("socket.io")(server);
 
 const bodyParser = require("body-parser");
@@ -13,11 +13,11 @@ const cookieParser = require("cookie-parser");
 const config = require("./config/key");
 
 io.on("connection", (socket) => {
-  console.log("One user connected");
+  socket.emit("hello", { a: "b" });
 });
 
 const mongoose = require("mongoose");
-const connect = mongoose
+mongoose
   .connect(config.mongoURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,

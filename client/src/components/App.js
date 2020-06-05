@@ -6,13 +6,12 @@ import { Provider as FluentProvider, themes } from "@fluentui/react-northstar";
 
 import Auth from "../hoc/auth";
 import store from "../store";
-// pages for this product
 import LoginPage from "./views/LoginPage/LoginPage.js";
 import RegisterPage from "./views/RegisterPage/RegisterPage.js";
 import MainPage from "./views/MainPage/MainPage";
 
-const socket = io("/");
-socket.connect();
+const socket = io.connect("http://localhost:5000");
+socket.on("hello", (data) => console.log(data));
 
 function App() {
   return (
