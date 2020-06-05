@@ -1,5 +1,12 @@
 const Group = require("../models/Group");
-const { Schema } = require("mongoose");
+const User = require("../models/User");
+const { Types } = require("mongoose");
+
+const ROLES = {
+  ADMIN: "Admin",
+  MODERATOR: "Moderator",
+  MEMBER: "Member",
+};
 
 const createGroup = async (userId, requestBody) => {
   const { name, avatar } = requestBody;
@@ -23,11 +30,18 @@ const getGroups = async (userId) => {
   try {
     const groups = await Group.find({
       members: userId,
-    }).select(["_id", "name", "avatar", "messages", "members"]);
+    });
 
     return groups.map((g) => {
-      const { _id, name, avatar, messages } = g;
-      g = { _id, name, avatar, messages, memberCount: g.members.length };
+      const { _id, name, avatar, messages, admin, moderators } = g;
+      const role = admin.equals(userId)
+        ? ROLES.ADMIN
+        : moderators.any((id) => id.equals(userId))
+        ? ROLES.MODERATOR
+        : ROLES.MEMBER;
+      console.log(admin.equals(userId));
+      g = { _id, name, avatar, messages, memberCount: g.members.length, role };
+
       return g;
     });
   } catch (err) {
@@ -35,7 +49,35 @@ const getGroups = async (userId) => {
   }
 };
 
+const addMember = async (userId, requestBody) => {
+  try {
+    const { groupId, memberEmail } = requestBody;
+    const group = await Group.findById(groupId);
+
+    if (
+      group === null ||
+      (!group.admin.equals(userId) &&
+        !group.moderators.some((m) => m.equals(userId)))
+    )
+      return false;
+
+    const member = await User.findOne({ email: memberEmail });
+
+    if (member === null) return false;
+
+    group.members.push(member._id);
+
+    await group.save();
+
+    return true;
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+};
+
 module.exports = {
   createGroup,
   getGroups,
+  addMember,
 };

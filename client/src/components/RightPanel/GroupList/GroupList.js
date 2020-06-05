@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useMediaQuery } from "@material-ui/core";
-import { Dropdown, Card, Flex, Avatar, Text } from "@fluentui/react-northstar";
+import { Dropdown, Card, Flex } from "@fluentui/react-northstar";
 import { TeamCreateIcon } from "@fluentui/react-icons-northstar";
 import axios from "axios";
 
 import useStyles from "./styles";
 import AddGroupDialog from "./AddGroupDialog";
+import GroupCard from "./GroupCard";
 
 const FILTERS = {
   ALL: "Tất cả",
@@ -80,33 +81,7 @@ function GroupList(props) {
             </Flex>
           </Card>
           {groups.map((g, i) => (
-            <Card key={i} className={classes.groupCard}>
-              <Card.Body fitted>
-                <Flex gap="gap.small">
-                  <Flex column gap="gap.small">
-                    <Avatar
-                      className={classes.avatar}
-                      image={g.avatar}
-                      name={g.name}
-                    />
-                  </Flex>
-                  <Flex column gap="gap.small" styles={{ overflow: "hidden" }}>
-                    <Text
-                      content={g.name}
-                      size="small"
-                      weight="bold"
-                      truncated
-                      title={g.name}
-                    />
-                    <Text
-                      content={`${g.memberCount} thành viên`}
-                      size="small"
-                      weight="light"
-                    />
-                  </Flex>
-                </Flex>
-              </Card.Body>
-            </Card>
+            <GroupCard key={i} group={g} />
           ))}
         </Flex>
       </div>

@@ -18,17 +18,27 @@ const largeScreenStyles = {
     maxWidth: 320,
   },
   avatar: {
-    border: "1px solid #c9c9c9",
+    border: "1px solid gray",
     borderRadius: "100%",
-    width: 30,
-    height: 30,
+    width: 34,
+    height: 34,
+    padding: 4,
+  },
+  roleAdmin: {
+    borderColor: "#FFDF00",
+  },
+  roleModerator: {
+    borderColor: "#C0C0C0",
+  },
+  groupCardContainer: {
+    width: 200,
+    marginBottom: 15,
   },
   groupCard: {
     userSelect: "none",
     "&:hover": {
       cursor: "pointer",
     },
-    marginBottom: 15,
     width: 200,
   },
   addCard: {
@@ -39,6 +49,11 @@ const largeScreenStyles = {
       backgroundColor: "#00808010",
     },
     width: 200,
+  },
+  btnMore: {
+    position: "absolute",
+    right: 3,
+    top: 5,
   },
 };
 
