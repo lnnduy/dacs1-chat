@@ -4,16 +4,13 @@ import { useMediaQuery } from "@material-ui/core";
 
 import useStyles from "./styles";
 
-function ContactMenuItem(props) {
-  const { content, Icon, color, isSelect, onClick } = props;
+function ContactTitleItem(props) {
+  const { content, Icon, color } = props;
   const isSmall = !useMediaQuery("(min-width:740px)");
   const classes = useStyles(isSmall)(props);
 
   return (
-    <div
-      className={isSelect ? classes.selectedLeftMenuCard : classes.leftMenuCard}
-      onClick={onClick}
-    >
+    <div className={classes.contactTitle}>
       <Flex vAlign="center">
         <Flex column>
           <span
@@ -34,4 +31,4 @@ function ContactMenuItem(props) {
   );
 }
 
-export default ContactMenuItem;
+export default ContactTitleItem;

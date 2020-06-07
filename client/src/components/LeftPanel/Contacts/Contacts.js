@@ -1,6 +1,11 @@
 import React, { useEffect } from "react";
 import { useMediaQuery } from "@material-ui/core";
-import { TeamsIcon, UserFriendsIcon } from "@fluentui/react-icons-northstar";
+import {
+  TeamsIcon,
+  UserFriendsIcon,
+  RaiseHandIcon,
+  ParticipantAddIcon,
+} from "@fluentui/react-icons-northstar";
 import { Flex } from "@fluentui/react-northstar";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -16,8 +21,6 @@ function Contacts(props) {
   );
   const classes = useStyles(isSmall)(props);
   const dispatch = useDispatch();
-
-  console.log(selectedContactMenuItemCode);
 
   return (
     <div className={classes.contactLists}>
@@ -42,7 +45,7 @@ function Contacts(props) {
         />
         <ContactMenuItem
           color="#00ffaa"
-          Icon={TeamsIcon}
+          Icon={ParticipantAddIcon}
           content="Yêu cầu kết bạn"
           isSelect={
             selectedContactMenuItemCode ===
@@ -58,7 +61,7 @@ function Contacts(props) {
         />
         <ContactMenuItem
           color="#ffee00"
-          Icon={TeamsIcon}
+          Icon={RaiseHandIcon}
           content="Yêu cầu kết bạn đã gửi"
           isSelect={
             selectedContactMenuItemCode ===

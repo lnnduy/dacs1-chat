@@ -2,7 +2,7 @@ import { makeStyles } from "@material-ui/core";
 
 const largeScreenStyles = {
   contactLists: {
-    gridArea: "conversation-list",
+    gridArea: "conversation-list chat-form",
     background: "#fff",
   },
   leftMenuCard: {

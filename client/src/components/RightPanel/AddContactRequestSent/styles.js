@@ -1,16 +1,11 @@
 import { makeStyles } from "@material-ui/core";
 
 const largeScreenStyles = {
-  title: {
-    gridArea: "chat-title",
-    backgroundColor: "#fff",
-    color: "#232323",
-    borderBottom: "1px solid rgba(0, 0, 0, 0.1)",
+  container: {
+    gridArea: "contact-view",
     borderLeft: "1px solid rgba(0, 0, 0, 0.1)",
-  },
-  contactTitle: {
     padding: 15,
-    userSelect: "none",
+    height: "100%",
   },
 };
 

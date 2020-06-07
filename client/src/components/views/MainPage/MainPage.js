@@ -1,5 +1,6 @@
 import React from "react";
 import { useMediaQuery } from "@material-ui/core";
+import { useSelector } from "react-redux";
 
 import useStyles from "./styles";
 
@@ -8,7 +9,8 @@ import RightPanel from "../../RightPanel/RightPanel";
 
 function MainPage(props) {
   const isSmall = !useMediaQuery("(min-width:740px)");
-  const classes = useStyles(isSmall)(props);
+  const { selectedMenuItemCode } = useSelector((store) => store.leftMenu);
+  const classes = useStyles(isSmall, selectedMenuItemCode)(props);
 
   return (
     <div className={classes.chatContainer}>

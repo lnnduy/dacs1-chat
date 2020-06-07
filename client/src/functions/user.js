@@ -20,3 +20,15 @@ export function registerUser(dataToSubmit) {
 export function logoutUser() {
   return axios.get(`${USER_SERVER}/logout`).then((response) => response.data);
 }
+
+export function loadAddContactRequestsReceived() {
+  return axios
+    .get(`${USER_SERVER}/contacts/addContactRequests/received`)
+    .then((res) => res.data);
+}
+
+export function loadAddContactRequestsSent() {
+  return axios
+    .get(`${USER_SERVER}/contacts/addContactRequests/sent`)
+    .then((res) => res.data);
+}

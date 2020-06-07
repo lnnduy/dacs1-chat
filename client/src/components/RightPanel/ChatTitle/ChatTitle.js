@@ -1,16 +1,12 @@
 import React from "react";
-import { useMediaQuery } from "@material-ui/core";
 import { useSelector } from "react-redux";
-
-import useStyles from "./styles";
-import { MENU_ITEMS } from "../../../_actions/types";
 
 import ContactsTitle from "./ContactsTitle";
 import ConversationTitle from "./ConversationTitle";
 
+import { MENU_ITEMS } from "../../../_actions/types";
+
 function ChatTitle(props) {
-  const isSmall = !useMediaQuery("(min-width:740px)");
-  const classes = useStyles(isSmall)(props);
   const { selectedMenuItemCode } = useSelector((store) => store.leftMenu);
 
   return (

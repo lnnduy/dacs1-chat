@@ -2,9 +2,10 @@ import { makeStyles } from "@material-ui/core";
 
 const largeScreenStyles = {
   groupList: {
-    gridArea: "chat-message-list",
+    gridArea: "contact-view",
     borderLeft: "1px solid rgba(0, 0, 0, 0.1)",
     padding: 15,
+    height: "100%",
   },
   controlsContainer: {
     display: "flex",
