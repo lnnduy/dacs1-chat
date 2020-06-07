@@ -13,6 +13,14 @@ const largeScreenStyles = {
       cursor: "pointer",
     },
   },
+  selectedLeftMenuCard: {
+    padding: 15,
+    userSelect: "none",
+    backgroundColor: "#00a0e922",
+    "&:hover": {
+      cursor: "pointer",
+    },
+  },
 };
 
 const smallScreenStyles = {

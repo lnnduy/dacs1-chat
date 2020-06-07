@@ -13,7 +13,7 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { loginUser } from "../../../functions/user";
-import { updateUserData } from "../../../_actions/user_actions";
+import { updateUserData } from "../../../_actions/userActions";
 
 function LoginPage(props) {
   const dispatch = useDispatch();

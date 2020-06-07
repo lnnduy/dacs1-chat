@@ -7,7 +7,7 @@ import { ExitToApp, ChatOutlined, ContactsOutlined } from "@material-ui/icons";
 import useStyles from "./styles";
 import MenuItem from "./MenuItem";
 import { logoutUser } from "../../../functions/user";
-import { selectMenuItem } from "../../../_actions/left_menu_actions";
+import { selectMenuItem } from "../../../_actions/leftMenuActions";
 
 import { MENU_ITEMS } from "../../../_actions/types";
 
@@ -23,7 +23,7 @@ function LeftMenu(props) {
     <div className={classes.leftMenu}>
       <div className={classes.userAvatar}>
         <Avatar
-          src={user?.image}
+          src={user?.avatar}
           style={{
             borderRadius: "100%",
             border: "2px white solid",

@@ -6,7 +6,6 @@ export default function (state = {}, action) {
       state = { ...state, user: { ...action.payload } };
       return state;
     case CLEAR_USER_DATA:
-      console.log("clear");
       return { ...state, user: null };
     default:
       return state;

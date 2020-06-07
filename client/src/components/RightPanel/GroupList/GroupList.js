@@ -39,7 +39,9 @@ function GroupList(props) {
     axios
       .get("api/groups")
       .then((res) => res.data)
-      .then((data) => setGroups(data))
+      .then((data) => {
+        if (data.success) setGroups(data.data);
+      })
       .catch((err) => console.log(err));
   }, []);
 
@@ -80,9 +82,7 @@ function GroupList(props) {
               </Card.Body>
             </Flex>
           </Card>
-          {groups.map((g, i) => (
-            <GroupCard key={i} group={g} />
-          ))}
+          {groups && groups.map((g, i) => <GroupCard key={i} group={g} />)}
         </Flex>
       </div>
       <AddGroupDialog

@@ -62,7 +62,7 @@ function RegisterPage(props) {
             avatar: `http://gravatar.com/avatar/${moment().unix()}?d=identicon`,
           };
 
-          dispatch(registerUser(dataToSubmit)).then((response) => {
+          registerUser(dataToSubmit).then((response) => {
             if (response.success) {
               props.history.push("/login");
             } else {

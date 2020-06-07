@@ -25,10 +25,10 @@ const largeScreenStyles = {
     padding: 4,
   },
   roleAdmin: {
-    borderColor: "#FFDF00",
+    border: "2px solid #FFDF00",
   },
   roleModerator: {
-    borderColor: "#C0C0C0",
+    border: "2px solid #C0C0C0",
   },
   groupCardContainer: {
     width: 200,

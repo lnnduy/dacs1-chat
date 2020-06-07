@@ -1,10 +1,10 @@
-const mongoose = require("mongoose");
+const { Schema, model } = require("mongoose");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const jwt = require("jsonwebtoken");
 const moment = require("moment");
 
-const userSchema = mongoose.Schema(
+const userSchema = Schema(
   {
     name: {
       type: String,
@@ -31,7 +31,15 @@ const userSchema = mongoose.Schema(
       type: Number,
     },
     contacts: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: [Schema.Types.ObjectId],
+      ref: "user",
+    },
+    addContactRequestsReceived: {
+      type: [Schema.Types.ObjectId],
+      ref: "user",
+    },
+    addContactRequestsSent: {
+      type: [Schema.Types.ObjectId],
       ref: "user",
     },
   },
@@ -89,6 +97,6 @@ userSchema.statics.findByToken = function (token, cb) {
   });
 };
 
-const User = mongoose.model("user", userSchema);
+const User = model("user", userSchema);
 
 module.exports = User;

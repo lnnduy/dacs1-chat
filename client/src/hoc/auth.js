@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import { auth } from "../functions/user";
 import { useDispatch } from "react-redux";
-import { clearUserData, updateUserData } from "../_actions/user_actions";
+import { clearUserData, updateUserData } from "../_actions/userActions";
 
 export default function (ComposedClass, reload, adminRoute = null) {
   function AuthenticationCheck(props) {

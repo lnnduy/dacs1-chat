@@ -36,7 +36,7 @@ const getGroups = async (userId) => {
       const { _id, name, avatar, messages, admin, moderators } = g;
       const role = admin.equals(userId)
         ? ROLES.ADMIN
-        : moderators.any((id) => id.equals(userId))
+        : moderators.some((id) => id.equals(userId))
         ? ROLES.MODERATOR
         : ROLES.MEMBER;
       console.log(admin.equals(userId));
@@ -46,6 +46,7 @@ const getGroups = async (userId) => {
     });
   } catch (err) {
     console.log(err);
+    return [];
   }
 };
 
@@ -64,6 +65,8 @@ const addMember = async (userId, requestBody) => {
     const member = await User.findOne({ email: memberEmail });
 
     if (member === null) return false;
+
+    if (group.members.includes(member._id)) return true;
 
     group.members.push(member._id);
 

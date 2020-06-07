@@ -1,10 +1,12 @@
 import { combineReducers } from "redux";
-import user from "./user_reducer";
-import leftMenu from "./left_menu_reducer";
+import user from "./userReducer";
+import leftMenu from "./leftMenuReducer";
+import contactMenu from "./contactMenuReducer";
 
 const rootReducer = combineReducers({
   user,
   leftMenu,
+  contactMenu,
 });
 
 export default rootReducer;

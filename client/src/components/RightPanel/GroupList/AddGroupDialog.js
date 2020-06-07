@@ -28,11 +28,15 @@ function AddGroupDialog(props) {
       })
       .then((res) => res.data)
       .then((data) => {
-        onCreateSuccess({
-          name: data.name,
-          avatar: data.avatar,
-          memberCount: 1,
-        });
+        if (data.success) {
+          const group = data.data;
+          onCreateSuccess({
+            name: group.name,
+            avatar: group.avatar,
+            memberCount: 1,
+            role: "Admin",
+          });
+        }
         onClose();
       })
       .catch((e) => {
@@ -43,7 +47,7 @@ function AddGroupDialog(props) {
 
   return (
     <Dialog
-      backdrop="true"
+      backdrop
       open={open}
       header="Thêm nhóm mới"
       headerAction={{

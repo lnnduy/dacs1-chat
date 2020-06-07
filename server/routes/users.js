@@ -3,6 +3,11 @@ const router = express.Router();
 const User = require("../models/User");
 
 const { auth } = require("../middleware/auth");
+const {
+  sendAddContactRequest,
+  getAddContactRequestsReceived,
+  getAddContactRequestsSent,
+} = require("../functions/user");
 
 router.get("/auth", auth, (req, res) => {
   res.status(200).json({
@@ -13,7 +18,7 @@ router.get("/auth", auth, (req, res) => {
     name: req.user.name,
     lastname: req.user.lastname,
     role: req.user.role,
-    image: req.user.image,
+    avatar: req.user.avatar,
   });
 });
 
@@ -55,11 +60,27 @@ router.post("/login", (req, res) => {
             name: user.name,
             lastname: user.lastname,
             role: user.role,
-            image: user.image,
+            avatar: user.avatar,
           });
       });
     });
   });
+});
+
+router.post("/contacts/addContactRequests", auth, async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const success = await sendAddContactRequest(userId, req.body);
+
+    if (success) {
+      res.ok();
+    } else {
+      res.badRequest();
+    }
+  } catch (err) {
+    console.log(err);
+    res.internalServerError();
+  }
 });
 
 router.get("/logout", auth, (req, res) => {
@@ -73,6 +94,22 @@ router.get("/logout", auth, (req, res) => {
       });
     }
   );
+});
+
+router.get("/contacts/addContactRequests/sent", auth, async (req, res) => {
+  const userId = req.user._id;
+  const requests = await getAddContactRequestsSent(userId);
+
+  if (requests === false) res.badRequest();
+  else res.ok(requests);
+});
+
+router.get("/contacts/addContactRequests/received", auth, async (req, res) => {
+  const userId = req.user._id;
+  const requests = await getAddContactRequestsReceived(userId);
+
+  if (requests === false) res.badRequest();
+  else res.ok(requests);
 });
 
 module.exports = router;

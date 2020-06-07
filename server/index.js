@@ -35,16 +35,18 @@ app.use(cookieParser());
 
 app.use((req, res, next) => {
   res.ok = (data) => {
-    res.status(200).json(data);
+    if (data) res.status(200).json({ success: true, data });
+    else res.status(200).json({ success: true });
   };
   res.created = (data) => {
-    res.status(201).json(data);
+    res.status(201).json({ success: true, data });
   };
   res.noContent = (data) => {
     res.status(204).json(data);
   };
   res.badRequest = (data) => {
-    res.status(400).json(data);
+    if (data) res.status(400).json({ success: false, data });
+    else res.status(400).json({ success: false });
   };
   res.Unauthorize = (data) => {
     res.status(401).json(data);
@@ -55,8 +57,8 @@ app.use((req, res, next) => {
   res.notFound = (data) => {
     res.status(404).json(data);
   };
-  res.internalServerError = (data) => {
-    res.status(500).json(data);
+  res.internalServerError = () => {
+    res.status(500).json({ success: false });
   };
   next();
 });
