@@ -7,6 +7,7 @@ const {
   sendAddContactRequest,
   getAddContactRequestsReceived,
   getAddContactRequestsSent,
+  getContacts,
 } = require("../functions/user");
 
 router.get("/auth", auth, (req, res) => {
@@ -110,6 +111,14 @@ router.get("/contacts/addContactRequests/received", auth, async (req, res) => {
 
   if (requests === false) res.badRequest();
   else res.ok(requests);
+});
+
+router.get("/contacts", auth, async (req, res) => {
+  const userId = req.user._id;
+  const contacts = await getContacts(userId);
+
+  if (contacts === false) res.badRequest();
+  else res.ok(contacts);
 });
 
 module.exports = router;

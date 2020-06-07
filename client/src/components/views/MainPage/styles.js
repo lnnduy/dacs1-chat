@@ -1,5 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { MENU_ITEMS } from "../../../_actions/types";
+
 const conversationView = `
       'left-menu search-container chat-title' 85px
       'left-menu conversation-list chat-message-list' 1fr

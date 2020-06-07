@@ -13,13 +13,29 @@ const sendAddContactRequest = async (userId, bodyRequest) => {
 
     if (receiver.addContactRequestsReceived !== undefined)
       receiver.addContactRequestsReceived.push(userId);
-    else if (!receiver.addContactRequestsReceived.some(userId))
+    else if (!receiver.addContactRequestsReceived.includes(userId))
       receiver.addContactRequestsReceived = [userId];
     else return true;
 
+    if (
+      receiver.addContactRequestsSent !== undefined &&
+      receiver.addContactRequestsSent.includes(sender._id)
+    ) {
+      if (receiver.contacts !== undefined) receiver.contacts.push(sender._id);
+      else receiver.contacts = [sender._id];
+      if (sender.contacts !== undefined) sender.contacts.push(receiver._id);
+      else sender.contacts = [receiver._id];
+      receiver.addContactRequestsSent.pull(sender._id);
+
+      receiver.save();
+      sender.save();
+
+      return true;
+    }
+
     if (sender.addContactRequestsSent !== undefined)
       sender.addContactRequestsSent.push(receiver._id);
-    else if (!sender.addContactRequestsSent.some(receiver._id))
+    else if (!sender.addContactRequestsSent.includes(receiver._id))
       receiver.addContactRequestsSent = [receiver._id];
     else return true;
 
@@ -40,7 +56,7 @@ const getAddContactRequestsReceived = async (userId) => {
     if (user.addContactRequestsReceived === undefined) return [];
 
     const promises = user.addContactRequestsReceived.map((r) =>
-      User.findById(r).select(["_id", "email", "displayName", "avatar"])
+      User.findById(r).select(["_id", "email", "name", "avatar"])
     );
 
     const requests = await Promise.all(promises);
@@ -55,7 +71,35 @@ const getAddContactRequestsReceived = async (userId) => {
 const getAddContactRequestsSent = async (userId) => {
   try {
     const user = await User.findById(userId);
-    return user.addContactRequestsSent || [];
+
+    if (user.addContactRequestsReceived === undefined) return [];
+
+    const promises = user.addContactRequestsSent.map((r) =>
+      User.findById(r).select(["_id", "email", "name", "avatar"])
+    );
+
+    const requests = await Promise.all(promises);
+
+    return requests;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+const getContacts = async (userId) => {
+  try {
+    const user = await User.findById(userId);
+
+    if (user.addContactRequestsReceived === undefined) return [];
+
+    const promises = user.contacts.map((r) =>
+      User.findById(r).select(["_id", "email", "name", "avatar"])
+    );
+
+    const contacts = await Promise.all(promises);
+
+    return contacts;
   } catch (err) {
     console.log(err);
     return false;
@@ -66,4 +110,5 @@ module.exports = {
   sendAddContactRequest,
   getAddContactRequestsReceived,
   getAddContactRequestsSent,
+  getContacts,
 };

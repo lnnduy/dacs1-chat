@@ -19,6 +19,9 @@ function Contacts(props) {
   const { selectedContactMenuItemCode } = useSelector(
     (store) => store.contactMenu
   );
+  const { user } = useSelector((store) => store.user);
+  const sentRequests = user?.addContactRequestsSent || [];
+  const receivedRequests = user?.addContactRequestsReceived || [];
   const classes = useStyles(isSmall)(props);
   const dispatch = useDispatch();
 
@@ -43,36 +46,42 @@ function Contacts(props) {
             dispatch(selectContactMenuItem(CONTACT_MENU_ITEMS.GROUPS))
           }
         />
-        <ContactMenuItem
-          color="#00ffaa"
-          Icon={ParticipantAddIcon}
-          content="Yêu cầu kết bạn"
-          isSelect={
-            selectedContactMenuItemCode ===
-            CONTACT_MENU_ITEMS.ADD_CONTACT_REQUEST_RECEIVED
-          }
-          onClick={() =>
-            dispatch(
-              selectContactMenuItem(
-                CONTACT_MENU_ITEMS.ADD_CONTACT_REQUEST_RECEIVED
+        {receivedRequests.length > 0 && (
+          <ContactMenuItem
+            color="#00ffaa"
+            Icon={ParticipantAddIcon}
+            content="Yêu cầu kết bạn"
+            isSelect={
+              selectedContactMenuItemCode ===
+              CONTACT_MENU_ITEMS.ADD_CONTACT_REQUEST_RECEIVED
+            }
+            onClick={() =>
+              dispatch(
+                selectContactMenuItem(
+                  CONTACT_MENU_ITEMS.ADD_CONTACT_REQUEST_RECEIVED
+                )
               )
-            )
-          }
-        />
-        <ContactMenuItem
-          color="#ffee00"
-          Icon={RaiseHandIcon}
-          content="Yêu cầu kết bạn đã gửi"
-          isSelect={
-            selectedContactMenuItemCode ===
-            CONTACT_MENU_ITEMS.ADD_CONTACT_REQUEST_SENT
-          }
-          onClick={() =>
-            dispatch(
-              selectContactMenuItem(CONTACT_MENU_ITEMS.ADD_CONTACT_REQUEST_SENT)
-            )
-          }
-        />
+            }
+          />
+        )}
+        {sentRequests.length > 0 && (
+          <ContactMenuItem
+            color="#ffee00"
+            Icon={RaiseHandIcon}
+            content="Yêu cầu kết bạn đã gửi"
+            isSelect={
+              selectedContactMenuItemCode ===
+              CONTACT_MENU_ITEMS.ADD_CONTACT_REQUEST_SENT
+            }
+            onClick={() =>
+              dispatch(
+                selectContactMenuItem(
+                  CONTACT_MENU_ITEMS.ADD_CONTACT_REQUEST_SENT
+                )
+              )
+            }
+          />
+        )}
       </Flex>
     </div>
   );

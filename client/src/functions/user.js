@@ -32,3 +32,7 @@ export function loadAddContactRequestsSent() {
     .get(`${USER_SERVER}/contacts/addContactRequests/sent`)
     .then((res) => res.data);
 }
+
+export function loadContacts() {
+  return axios.get(`${USER_SERVER}/contacts`).then((res) => res.data);
+}
