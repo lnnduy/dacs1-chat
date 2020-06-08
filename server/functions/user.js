@@ -168,8 +168,8 @@ const acceptAddContactRequest = async (userId, senderId) => {
       return false;
     }
 
-    user.addContactRequestsSent.pull(sender._id);
-    sender.addContactRequestsReceived.pull(user._id);
+    user.addContactRequestsReceived.pull(sender._id);
+    sender.addContactRequestsSent.pull(user._id);
     await createContacts(user, sender);
 
     return true;
