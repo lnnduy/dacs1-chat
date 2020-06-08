@@ -10,7 +10,11 @@ import LoginPage from "./views/LoginPage/LoginPage.js";
 import RegisterPage from "./views/RegisterPage/RegisterPage.js";
 import MainPage from "./views/MainPage/MainPage";
 
-const socket = io.connect("http://localhost:5000");
+const socket = io.connect(
+  process.env.NODE_ENV.toLowerCase() === "production"
+    ? window.location.href
+    : "http://localhost:5000"
+);
 socket.on("hello", (data) => console.log(data));
 
 function App() {
