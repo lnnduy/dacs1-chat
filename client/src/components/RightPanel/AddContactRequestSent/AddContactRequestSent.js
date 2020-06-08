@@ -9,13 +9,12 @@ import SentRequestCard from "./SentRequestCard";
 function AddContactRequestSent(props) {
   const isSmall = !useMediaQuery("(min-width:740px)");
   const classes = useStyles(isSmall)(props);
-  const { user } = useSelector((store) => store.user);
-  const requests = user?.addContactRequestsSent || [];
+  const { sentRequests } = useSelector((store) => store.contact);
 
   return (
     <div className={classes.container}>
       <Flex gap="gap.small">
-        {requests.map((r, i) => (
+        {sentRequests.map((r, i) => (
           <SentRequestCard key={i} request={r} />
         ))}
       </Flex>

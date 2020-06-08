@@ -8,6 +8,16 @@ import {
   AcceptIcon,
   CloseIcon,
 } from "@fluentui/react-northstar";
+import { useDispatch } from "react-redux";
+
+import {
+  declineAddContactRequestsSent,
+  acceptAddContactRequestsSent,
+} from "../../../functions/contact";
+import {
+  declineAddContactRequestSuccess,
+  acceptAddContactRequestSuccess,
+} from "../../../_actions/contactActions";
 
 import useStyles from "./styles";
 
@@ -15,12 +25,23 @@ function ReceivedRequestCard(props) {
   const { request } = props;
   const isSmall = !useMediaQuery("(min-width:740px)");
   const classes = useStyles(isSmall)(props);
+  const dispatch = useDispatch();
 
   const acceptRequest = () => {
-    console.log(`Accept request to ${request.email} - id: ${request._id}`);
+    acceptAddContactRequestsSent(request._id)
+      .then((res) => {
+        if (res.success === true)
+          dispatch(acceptAddContactRequestSuccess(request));
+      })
+      .catch((err) => console.log(err));
   };
   const declineRequest = () => {
-    console.log(`Decline request to ${request.email} - id: ${request._id}`);
+    declineAddContactRequestsSent(request._id)
+      .then((res) => {
+        if (res.success === true)
+          dispatch(declineAddContactRequestSuccess(request));
+      })
+      .catch((err) => console.log(err));
   };
 
   return (

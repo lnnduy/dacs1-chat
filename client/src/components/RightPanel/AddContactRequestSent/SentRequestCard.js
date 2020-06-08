@@ -1,6 +1,10 @@
 import React from "react";
 import { useMediaQuery, Avatar } from "@material-ui/core";
 import { Flex, Card, Text, Button, CloseIcon } from "@fluentui/react-northstar";
+import { useDispatch } from "react-redux";
+
+import { cancelAddContactRequestsSent } from "../../../functions/contact";
+import { cancelAddContactRequestSuccess } from "../../../_actions/contactActions";
 
 import useStyles from "./styles";
 
@@ -8,9 +12,15 @@ function SentRequestCard(props) {
   const { request } = props;
   const isSmall = !useMediaQuery("(min-width:740px)");
   const classes = useStyles(isSmall)(props);
+  const dispatch = useDispatch();
 
   const cancelRequest = () => {
-    console.log(`Cancel request to ${request.email} - id: ${request._id}`);
+    cancelAddContactRequestsSent(request._id)
+      .then((res) => {
+        if (res.success === true)
+          dispatch(cancelAddContactRequestSuccess(request));
+      })
+      .catch((err) => console.log(err));
   };
 
   return (

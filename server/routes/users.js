@@ -8,6 +8,9 @@ const {
   getAddContactRequestsReceived,
   getAddContactRequestsSent,
   getContacts,
+  acceptAddContactRequest,
+  declineAddContactRequest,
+  cancelAddContactRequest,
 } = require("../functions/user");
 
 router.get("/auth", auth, (req, res) => {
@@ -71,13 +74,11 @@ router.post("/login", (req, res) => {
 router.post("/contacts/addContactRequests", auth, async (req, res) => {
   try {
     const userId = req.user._id;
-    const success = await sendAddContactRequest(userId, req.body);
+    const result = await sendAddContactRequest(userId, req.body);
 
-    if (success) {
-      res.ok();
-    } else {
-      res.badRequest();
-    }
+    if (result === true) res.ok();
+    else if (result === false) res.badRequest();
+    else res.ok(result);
   } catch (err) {
     console.log(err);
     res.internalServerError();
@@ -98,27 +99,93 @@ router.get("/logout", auth, (req, res) => {
 });
 
 router.get("/contacts/addContactRequests/sent", auth, async (req, res) => {
-  const userId = req.user._id;
-  const requests = await getAddContactRequestsSent(userId);
+  try {
+    const userId = req.user._id;
+    const requests = await getAddContactRequestsSent(userId);
 
-  if (requests === false) res.badRequest();
-  else res.ok(requests);
+    if (requests === false) res.badRequest();
+    else res.ok(requests);
+  } catch (error) {
+    console.log(error);
+    res.internalServerError();
+  }
 });
 
 router.get("/contacts/addContactRequests/received", auth, async (req, res) => {
-  const userId = req.user._id;
-  const requests = await getAddContactRequestsReceived(userId);
+  try {
+    const userId = req.user._id;
+    const requests = await getAddContactRequestsReceived(userId);
 
-  if (requests === false) res.badRequest();
-  else res.ok(requests);
+    if (requests === false) res.badRequest();
+    else res.ok(requests);
+  } catch (error) {
+    console.log(error);
+    res.internalServerError();
+  }
 });
 
 router.get("/contacts", auth, async (req, res) => {
-  const userId = req.user._id;
-  const contacts = await getContacts(userId);
+  try {
+    const userId = req.user._id;
+    const contacts = await getContacts(userId);
 
-  if (contacts === false) res.badRequest();
-  else res.ok(contacts);
+    if (contacts === false) res.badRequest();
+    else res.ok(contacts);
+  } catch (error) {
+    console.log(error);
+    res.internalServerError();
+  }
 });
+
+router.get(
+  "/contacts/addContactRequests/accept/:senderId",
+  auth,
+  async (req, res) => {
+    const userId = req.user._id;
+    const { senderId } = req.params;
+    try {
+      const success = await acceptAddContactRequest(userId, senderId);
+      if (success) res.ok();
+      else res.badRequest();
+    } catch (error) {
+      console.log(error);
+      res.internalServerError();
+    }
+  }
+);
+
+router.delete(
+  "/contacts/addContactRequests/decline/:senderId",
+  auth,
+  async (req, res) => {
+    const userId = req.user._id;
+    const { senderId } = req.params;
+    try {
+      const success = await declineAddContactRequest(userId, senderId);
+      if (success) res.ok();
+      else res.badRequest();
+    } catch (error) {
+      console.log(error);
+      res.internalServerError();
+    }
+  }
+);
+
+router.delete(
+  "/contacts/addContactRequests/cancel/:receiverId",
+  auth,
+  async (req, res) => {
+    const userId = req.user._id;
+    const { receiverId } = req.params;
+    try {
+      const success = await cancelAddContactRequest(userId, receiverId);
+      if (success) res.ok();
+      else res.badRequest();
+    } catch (error) {
+      console.log(error);
+      res.internalServerError();
+    }
+  }
+);
 
 module.exports = router;

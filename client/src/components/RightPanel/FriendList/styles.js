@@ -7,6 +7,38 @@ const largeScreenStyles = {
     padding: 15,
     height: "100%",
   },
+  btnAddFriend: {
+    color: "#00aaff",
+    borderColor: "#00aaff",
+    "&:hover": {
+      color: "#00eeff",
+      borderColor: "#00eeff",
+      backgroundColor: "#00aaff12",
+    },
+  },
+  avatar: {
+    border: "1px solid white",
+    borderRadius: "100%",
+    width: 34,
+    height: 34,
+    padding: 4,
+  },
+  friendCardContainer: {
+    width: 200,
+    marginBottom: 15,
+  },
+  friendCard: {
+    userSelect: "none",
+    "&:hover": {
+      cursor: "pointer",
+    },
+    width: 200,
+  },
+  btnMore: {
+    position: "absolute",
+    right: 3,
+    top: 5,
+  },
 };
 
 const smallScreenStyles = largeScreenStyles;

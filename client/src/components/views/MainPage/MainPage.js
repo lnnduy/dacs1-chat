@@ -7,12 +7,12 @@ import {
   loadAddContactRequestsReceived,
   loadAddContactRequestsSent,
   loadContacts,
-} from "../../../functions/user";
+} from "../../../functions/contact";
 import {
   updateAddContactRequestsReceived,
   updateAddContactRequestsSent,
   updateContacts,
-} from "../../../_actions/userActions";
+} from "../../../_actions/contactActions";
 
 import LeftPanel from "../../LeftPanel/LeftPanel";
 import RightPanel from "../../RightPanel/RightPanel";

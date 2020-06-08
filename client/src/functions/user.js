@@ -1,5 +1,5 @@
 import axios from "axios";
-import { USER_SERVER } from "../components/Config.js";
+import { USER_SERVER } from "../shared/Config";
 
 export function loginUser(dataToSubmit) {
   return axios
@@ -19,20 +19,4 @@ export function registerUser(dataToSubmit) {
 
 export function logoutUser() {
   return axios.get(`${USER_SERVER}/logout`).then((response) => response.data);
-}
-
-export function loadAddContactRequestsReceived() {
-  return axios
-    .get(`${USER_SERVER}/contacts/addContactRequests/received`)
-    .then((res) => res.data);
-}
-
-export function loadAddContactRequestsSent() {
-  return axios
-    .get(`${USER_SERVER}/contacts/addContactRequests/sent`)
-    .then((res) => res.data);
-}
-
-export function loadContacts() {
-  return axios.get(`${USER_SERVER}/contacts`).then((res) => res.data);
 }

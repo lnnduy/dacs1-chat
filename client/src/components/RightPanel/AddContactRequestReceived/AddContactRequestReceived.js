@@ -9,13 +9,12 @@ import ReceivedRequestCard from "./ReceivedRequestCard";
 function AddContactRequestReceived(props) {
   const isSmall = !useMediaQuery("(min-width:740px)");
   const classes = useStyles(isSmall)(props);
-  const { user } = useSelector((store) => store.user);
-  const requests = user?.addContactRequestsReceived || [];
+  const { receivedRequests } = useSelector((store) => store.contact);
 
   return (
     <div className={classes.container}>
       <Flex gap="gap.small">
-        {requests.map((r, i) => (
+        {receivedRequests.map((r, i) => (
           <ReceivedRequestCard key={i} request={r} />
         ))}
       </Flex>

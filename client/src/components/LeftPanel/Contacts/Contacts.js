@@ -19,9 +19,9 @@ function Contacts(props) {
   const { selectedContactMenuItemCode } = useSelector(
     (store) => store.contactMenu
   );
-  const { user } = useSelector((store) => store.user);
-  const sentRequests = user?.addContactRequestsSent || [];
-  const receivedRequests = user?.addContactRequestsReceived || [];
+  const { sentRequests, receivedRequests } = useSelector(
+    (store) => store.contact
+  );
   const classes = useStyles(isSmall)(props);
   const dispatch = useDispatch();
 
