@@ -18,7 +18,7 @@ function FriendCard(props) {
   const isSmall = !useMediaQuery("(min-width:740px)");
   const classes = useStyles(isSmall)(props);
   const [onMouseOver, setOnMouseOver] = useState(false);
-
+  console.log(friend);
   return (
     <div
       className={classes.friendCardContainer}
@@ -54,7 +54,7 @@ function FriendCard(props) {
         <Card.Body fitted>
           <Flex gap="gap.small">
             <Flex column gap="gap.small">
-              <Avatar image={friend.avatar} />
+              <Avatar src={friend.avatar} />
             </Flex>
             <Flex
               vAlign="center"

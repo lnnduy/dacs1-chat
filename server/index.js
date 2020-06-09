@@ -12,8 +12,28 @@ const cookieParser = require("cookie-parser");
 
 const config = require("./config/key");
 
+const {
+  emitAddContactRequest,
+  emitAddNewContact,
+} = require("./emitters/contactEmitters");
+
+const { userStartedSocket, userStoppedSocket } = require("./functions/user");
+
 io.on("connection", (socket) => {
-  socket.emit("hello", { a: "b" });
+  socket.emit("serverRequestUserId");
+
+  socket.on("sendUserIdToServer", function ({ userId }) {
+    userStartedSocket(userId, socket.id);
+  });
+  socket.on("sendAddContactRequest", function ({ senderId, receiverEmail }) {
+    emitAddContactRequest(io)(senderId, receiverEmail);
+  });
+  socket.on("acceptAddContactRequest", function ({ userId, senderId }) {
+    emitAddNewContact(io)(userId, senderId);
+  });
+  socket.on("disconnect", function () {
+    userStoppedSocket(socket.id);
+  });
 });
 
 const mongoose = require("mongoose");

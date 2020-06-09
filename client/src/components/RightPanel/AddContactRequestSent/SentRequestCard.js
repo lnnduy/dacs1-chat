@@ -18,7 +18,7 @@ function SentRequestCard(props) {
     cancelAddContactRequestsSent(request._id)
       .then((res) => {
         if (res.success === true)
-          dispatch(cancelAddContactRequestSuccess(request));
+          dispatch(cancelAddContactRequestSuccess(request._id));
       })
       .catch((err) => console.log(err));
   };

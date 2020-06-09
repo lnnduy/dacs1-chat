@@ -225,6 +225,36 @@ const cancelAddContactRequest = async (userId, receiverId) => {
   }
 };
 
+const userStartedSocket = async (userId, socketId) => {
+  try {
+    const user = await User.findById(userId);
+
+    if (user === null) return;
+
+    user.isOnline = true;
+    user.socketId = socketId;
+
+    await user.save();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const userStoppedSocket = async (socketId) => {
+  try {
+    const user = await User.findOne({ socketId });
+
+    if (user === null) return;
+
+    user.isOnline = false;
+    user.socketId = undefined;
+
+    await user.save();
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   sendAddContactRequest,
   getAddContactRequestsReceived,
@@ -233,4 +263,6 @@ module.exports = {
   acceptAddContactRequest,
   declineAddContactRequest,
   cancelAddContactRequest,
+  userStartedSocket,
+  userStoppedSocket,
 };

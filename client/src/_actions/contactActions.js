@@ -6,6 +6,8 @@ import {
   CANCEL_ADD_CONTACT_REQUEST_SUCCESS,
   ACCEPT_ADD_CONTACT_REQUEST_SUCCESS,
   DECLINE_ADD_CONTACT_REQUEST_SUCCESS,
+  RECEIVED_ADD_CONTACT_REQUEST,
+  ADD_NEW_CONTACT,
 } from "./types";
 
 export function sendAddContactRequestSuccess(request) {
@@ -34,4 +36,12 @@ export function updateAddContactRequestsSent(requests) {
 
 export function updateContacts(contacts) {
   return { type: UPDATE_ADD_CONTACTS, payload: contacts };
+}
+
+export function receivedAddContactRequest(request) {
+  return { type: RECEIVED_ADD_CONTACT_REQUEST, payload: request };
+}
+
+export function addNewContact(contact) {
+  return { type: ADD_NEW_CONTACT, payload: contact };
 }

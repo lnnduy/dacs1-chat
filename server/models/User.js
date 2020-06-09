@@ -42,6 +42,8 @@ const userSchema = Schema(
       type: [Schema.Types.ObjectId],
       ref: "user",
     },
+    socketId: String,
+    isOnline: Boolean,
   },
   {
     versionKey: false,

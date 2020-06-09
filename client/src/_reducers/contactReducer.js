@@ -6,6 +6,8 @@ import {
   ACCEPT_ADD_CONTACT_REQUEST_SUCCESS,
   CANCEL_ADD_CONTACT_REQUEST_SUCCESS,
   DECLINE_ADD_CONTACT_REQUEST_SUCCESS,
+  RECEIVED_ADD_CONTACT_REQUEST,
+  ADD_NEW_CONTACT,
 } from "../_actions/types";
 
 export default function (
@@ -53,13 +55,13 @@ export default function (
       return state;
     case CANCEL_ADD_CONTACT_REQUEST_SUCCESS:
       let sentRequests = state.sentRequests;
-      console.log(sentRequests);
-      sentRequests = sentRequests.splice(
-        sentRequests.findIndex((r) => r._id === action.payload._id),
+
+      sentRequests.splice(
+        sentRequests.findIndex((r) => r._id === action.payload),
         1
       );
-      console.log(sentRequests);
-      state = { ...state, sentRequests };
+
+      state = { ...state, sentRequests: [...sentRequests] };
       return state;
     case DECLINE_ADD_CONTACT_REQUEST_SUCCESS:
       const receivedRequestsWithRequestWillDecline = state.receivedRequests;
@@ -72,6 +74,27 @@ export default function (
       state = {
         ...state,
         receivedRequests: [...receivedRequestsWithRequestWillDecline],
+      };
+      return state;
+    case RECEIVED_ADD_CONTACT_REQUEST:
+      state = {
+        ...state,
+        receivedRequests: [action.payload, ...state.receivedRequests],
+      };
+      return state;
+    case ADD_NEW_CONTACT:
+      let sentRequestsWithAcceptedRequest = state.sentRequests;
+
+      sentRequestsWithAcceptedRequest.splice(
+        sentRequestsWithAcceptedRequest.findIndex(
+          (r) => r._id === action.payload._id
+        ),
+        1
+      );
+      state = {
+        ...state,
+        contacts: [action.payload, ...state.contacts],
+        sentRequests: [...sentRequestsWithAcceptedRequest],
       };
       return state;
     default:
