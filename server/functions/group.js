@@ -1,5 +1,6 @@
 const Group = require("../models/Group");
 const User = require("../models/User");
+const GroupConversation = require("../models/GroupConversation");
 
 const createGroup = async (userId, requestBody) => {
   const { name, avatar } = requestBody;
@@ -81,9 +82,32 @@ const leaveGroup = async (userId, groupId) => {
     group.members.pull(userId);
     await group.save();
 
+    const groupConversations = await GroupConversation.find({
+      user: userId,
+      group: groupId,
+    });
+
+    GroupConversation.deleteMany(groupConversations);
+
     return true;
   } catch (err) {
-    consol.log(arr);
+    consol.log(err);
+    return false;
+  }
+};
+
+const deleteGroup = async (userId, groupId) => {
+  try {
+    const group = await Group.findById(groupId);
+
+    if (group === null || !group.admin.equals(userId)) return false;
+
+    await GroupConversation.deleteMany({ groupId: groupId });
+    await Group.deleteOne({ _id: groupId, admin: userId });
+
+    return true;
+  } catch (err) {
+    console.log(err);
     return false;
   }
 };
@@ -93,4 +117,5 @@ module.exports = {
   getGroups,
   addMember,
   leaveGroup,
+  deleteGroup,
 };

@@ -7,6 +7,7 @@ const {
   getGroups,
   addMember,
   leaveGroup,
+  deleteGroup,
 } = require("../functions/group");
 
 router.post("/", auth, async (req, res) => {
@@ -45,6 +46,19 @@ router.get("/:groupId/leave", auth, async (req, res) => {
     const userId = req.user._id;
     const groupId = req.params.groupId;
     const success = await leaveGroup(userId, groupId);
+
+    if (success === true) res.ok();
+    else res.badRequest();
+  } catch (e) {
+    res.internalServerError();
+  }
+});
+
+router.delete("/:groupId", auth, async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const groupId = req.params.groupId;
+    const success = await deleteGroup(userId, groupId);
 
     if (success === true) res.ok();
     else res.badRequest();
