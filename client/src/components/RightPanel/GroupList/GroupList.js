@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useMediaQuery } from "@material-ui/core";
 import { Dropdown, Card, Flex } from "@fluentui/react-northstar";
 import { TeamCreateIcon } from "@fluentui/react-icons-northstar";
-import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
 
 import useStyles from "./styles";
 import AddGroupDialog from "./AddGroupDialog";
 import GroupCard from "./GroupCard";
+import { addGroup } from "../../../_actions/groupActions";
 
 const FILTERS = {
   ALL: "Tất cả",
@@ -32,18 +33,9 @@ function GroupList(props) {
   const classes = useStyles(isSmall)(props);
   const [selectedFilter, setSelectedFilter] = useState(FILTERS.ALL);
   const [selectedSorter, setSorter] = useState(SORT_BY.NAME_ASC);
-  const [groups, setGroups] = useState([]);
+  const groups = useSelector((store) => store.group);
   const [openAddGroupDialog, setOpenAddGroupDialog] = useState(false);
-
-  useEffect(() => {
-    axios
-      .get("api/groups")
-      .then((res) => res.data)
-      .then((data) => {
-        if (data.success) setGroups(data.data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  const dispatch = useDispatch();
 
   return (
     <div className={classes.groupList}>
@@ -88,7 +80,7 @@ function GroupList(props) {
       <AddGroupDialog
         open={openAddGroupDialog}
         onClose={() => setOpenAddGroupDialog(false)}
-        onCreateSuccess={(group) => setGroups([group, ...groups])}
+        onCreateSuccess={(group) => dispatch(addGroup(group))}
       />
     </div>
   );

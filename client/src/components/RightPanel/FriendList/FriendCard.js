@@ -18,7 +18,7 @@ function FriendCard(props) {
   const isSmall = !useMediaQuery("(min-width:740px)");
   const classes = useStyles(isSmall)(props);
   const [onMouseOver, setOnMouseOver] = useState(false);
-  console.log(friend);
+
   return (
     <div
       className={classes.friendCardContainer}

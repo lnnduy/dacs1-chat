@@ -8,11 +8,13 @@ import {
   loadAddContactRequestsSent,
   loadContacts,
 } from "../../../functions/contact";
+import { loadGroups } from "../../../functions/group";
 import {
   updateAddContactRequestsReceived,
   updateAddContactRequestsSent,
   updateContacts,
 } from "../../../_actions/contactActions";
+import { updateGroups } from "../../../_actions/groupActions";
 
 import LeftPanel from "../../LeftPanel/LeftPanel";
 import RightPanel from "../../RightPanel/RightPanel";
@@ -40,6 +42,12 @@ function MainPage(props) {
       if (data.success) {
         const contacts = data.data;
         dispatch(updateContacts(contacts));
+      }
+    });
+    loadGroups().then((data) => {
+      if (data.success) {
+        const groups = data.data;
+        dispatch(updateGroups(groups));
       }
     });
   }, []);

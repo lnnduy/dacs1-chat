@@ -4,18 +4,6 @@ import { CloseIcon } from "@fluentui/react-icons-northstar";
 import axios from "axios";
 import moment from "moment";
 
-const fields = [
-  {
-    label: "Tên nhóm",
-    name: "groupName",
-    required: true,
-    control: {
-      as: Input,
-      placeholder: "Nhập tên nhóm ",
-    },
-  },
-];
-
 function AddGroupDialog(props) {
   const { open, onClose, onCreateSuccess } = props;
   const [groupName, setGroupName] = useState("");
@@ -31,6 +19,7 @@ function AddGroupDialog(props) {
         if (data.success) {
           const group = data.data;
           onCreateSuccess({
+            _id: group._id,
             name: group.name,
             avatar: group.avatar,
             memberCount: 1,

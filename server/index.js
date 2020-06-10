@@ -11,29 +11,12 @@ const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 
 const config = require("./config/key");
-
-const {
-  emitAddContactRequest,
-  emitAddNewContact,
-} = require("./emitters/contactEmitters");
-
-const { userStartedSocket, userStoppedSocket } = require("./functions/user");
+const addEventListenersToSocket = require("./eventListeners/addEventListenersToSocket");
 
 io.on("connection", (socket) => {
   socket.emit("serverRequestUserId");
 
-  socket.on("sendUserIdToServer", function ({ userId }) {
-    userStartedSocket(userId, socket.id);
-  });
-  socket.on("sendAddContactRequest", function ({ senderId, receiverEmail }) {
-    emitAddContactRequest(io)(senderId, receiverEmail);
-  });
-  socket.on("acceptAddContactRequest", function ({ userId, senderId }) {
-    emitAddNewContact(io)(userId, senderId);
-  });
-  socket.on("disconnect", function () {
-    userStoppedSocket(socket.id);
-  });
+  addEventListenersToSocket(io, socket);
 });
 
 const mongoose = require("mongoose");
@@ -60,9 +43,6 @@ app.use((req, res, next) => {
   };
   res.created = (data) => {
     res.status(201).json({ success: true, data });
-  };
-  res.noContent = (data) => {
-    res.status(204).json(data);
   };
   res.badRequest = (data) => {
     if (data) res.status(400).json({ success: false, data });

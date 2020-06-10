@@ -14,8 +14,11 @@ import {
   TrashCanIcon,
 } from "@fluentui/react-icons-northstar";
 import { useMediaQuery } from "@material-ui/core";
+import { useDispatch } from "react-redux";
 
 import useStyles from "./styles";
+import AddMemberDialog from "./AddMemberDialog";
+import { addMemberSuccess } from "../../../_actions/groupActions";
 
 const ROLES = {
   ADMIN: "Admin",
@@ -28,6 +31,8 @@ function GroupCard(props) {
   const classes = useStyles(isSmall)(props);
   const { group } = props;
   const [onMouseOver, setOnMouseOver] = useState(false);
+  const [openAddMemberDialog, setOpenAddMemberDialog] = useState(false);
+  const dispatch = useDispatch();
 
   return (
     <div
@@ -65,6 +70,7 @@ function GroupCard(props) {
                     content="Thêm thành viên"
                     secondary
                     icon={<ParticipantAddIcon />}
+                    onClick={() => setOpenAddMemberDialog(true)}
                   />
                 )}
                 {group.role === ROLES.ADMIN && (
@@ -113,6 +119,14 @@ function GroupCard(props) {
           </Flex>
         </Card.Body>
       </Card>
+      {group !== undefined && (
+        <AddMemberDialog
+          open={openAddMemberDialog}
+          groupId={group._id}
+          onClose={() => setOpenAddMemberDialog(false)}
+          onAddMemberSuccess={() => dispatch(addMemberSuccess(group._id))}
+        />
+      )}
     </div>
   );
 }
