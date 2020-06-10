@@ -14,11 +14,13 @@ import {
   TrashCanIcon,
 } from "@fluentui/react-icons-northstar";
 import { useMediaQuery } from "@material-ui/core";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import useStyles from "./styles";
 import AddMemberDialog from "./AddMemberDialog";
-import { addMemberSuccess } from "../../../_actions/groupActions";
+import { addMemberSuccess, removeGroup } from "../../../_actions/groupActions";
+import { leaveGroups, deleteGroups } from "../../../functions/group";
+import { socketEmit } from "../../../socket";
 
 const ROLES = {
   ADMIN: "Admin",
@@ -33,6 +35,28 @@ function GroupCard(props) {
   const [onMouseOver, setOnMouseOver] = useState(false);
   const [openAddMemberDialog, setOpenAddMemberDialog] = useState(false);
   const dispatch = useDispatch();
+  const { user } = useSelector((store) => store.user);
+
+  const handleLeaveGroup = () => {
+    leaveGroups(group._id)
+      .then((data) => {
+        if (data.success) {
+          dispatch(removeGroup(group._id));
+          socketEmit("leaveGroup", { userId: user._id, groupId: group._id });
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+  const handleDeleteGroup = () => {
+    socketEmit("deleteGroup", { userId: user._id, groupId: group._id });
+    deleteGroups(group._id)
+      .then((data) => {
+        if (data.success) {
+          dispatch(removeGroup(group._id));
+        }
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div
@@ -61,6 +85,7 @@ function GroupCard(props) {
                     content="Rời nhóm"
                     secondary
                     icon={<LeaveIcon />}
+                    onClick={handleLeaveGroup}
                   />
                 )}
                 {(group.role === ROLES.MODERATOR ||
@@ -79,6 +104,7 @@ function GroupCard(props) {
                     content="Xoá nhóm"
                     secondary
                     icon={<TrashCanIcon />}
+                    onClick={handleDeleteGroup}
                   />
                 )}
               </Flex>
@@ -119,14 +145,13 @@ function GroupCard(props) {
           </Flex>
         </Card.Body>
       </Card>
-      {group !== undefined && (
-        <AddMemberDialog
-          open={openAddMemberDialog}
-          groupId={group._id}
-          onClose={() => setOpenAddMemberDialog(false)}
-          onAddMemberSuccess={() => dispatch(addMemberSuccess(group._id))}
-        />
-      )}
+
+      <AddMemberDialog
+        open={openAddMemberDialog}
+        groupId={group._id}
+        onClose={() => setOpenAddMemberDialog(false)}
+        onAddMemberSuccess={() => dispatch(addMemberSuccess(group._id))}
+      />
     </div>
   );
 }

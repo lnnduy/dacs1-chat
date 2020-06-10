@@ -1,7 +1,6 @@
 const User = require("../models/User");
 
-const emitAddContactRequest = (io) => async (senderId, receiverEmail) => {
-  console.log(senderId, receiverEmail);
+const addContactRequest = (io) => async (senderId, receiverEmail) => {
   const receiver = await User.findOne({ email: receiverEmail });
 
   if (
@@ -18,7 +17,7 @@ const emitAddContactRequest = (io) => async (senderId, receiverEmail) => {
   io.to(receiver.socketId).emit("receivedAddContactRequest", request);
 };
 
-const emitAddNewContact = (io) => async (userId, senderId) => {
+const addNewContact = (io) => async (userId, senderId) => {
   const sender = await User.findById(senderId);
 
   if (sender === null && !sender.isOnline && sender.socketId === undefined)
@@ -31,4 +30,4 @@ const emitAddNewContact = (io) => async (userId, senderId) => {
   io.to(sender.socketId).emit("addNewContact", contact);
 };
 
-module.exports = { emitAddContactRequest, emitAddNewContact };
+module.exports = { addContactRequest, addNewContact };

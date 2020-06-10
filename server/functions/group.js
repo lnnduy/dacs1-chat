@@ -2,6 +2,12 @@ const Group = require("../models/Group");
 const User = require("../models/User");
 const GroupConversation = require("../models/GroupConversation");
 
+const ROLES = {
+  ADMIN: "Admin",
+  MODERATOR: "Moderator",
+  MEMBER: "Member",
+};
+
 const createGroup = async (userId, requestBody) => {
   const { name, avatar } = requestBody;
 
@@ -80,6 +86,7 @@ const leaveGroup = async (userId, groupId) => {
     if (group === null || group.admin.equals(userId)) return false;
 
     group.members.pull(userId);
+    group.moderators.pull(userId);
     await group.save();
 
     const groupConversations = await GroupConversation.find({
