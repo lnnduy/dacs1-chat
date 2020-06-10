@@ -1,12 +1,5 @@
 const Group = require("../models/Group");
 const User = require("../models/User");
-const { Types } = require("mongoose");
-
-const ROLES = {
-  ADMIN: "Admin",
-  MODERATOR: "Moderator",
-  MEMBER: "Member",
-};
 
 const createGroup = async (userId, requestBody) => {
   const { name, avatar } = requestBody;
@@ -39,7 +32,7 @@ const getGroups = async (userId) => {
         : moderators.some((id) => id.equals(userId))
         ? ROLES.MODERATOR
         : ROLES.MEMBER;
-      console.log(admin.equals(userId));
+
       g = { _id, name, avatar, messages, memberCount: g.members.length, role };
 
       return g;
@@ -79,8 +72,25 @@ const addMember = async (userId, requestBody) => {
   }
 };
 
+const leaveGroup = async (userId, groupId) => {
+  try {
+    const group = await Group.findById(groupId);
+
+    if (group === null || group.admin.equals(userId)) return false;
+
+    group.members.pull(userId);
+    await group.save();
+
+    return true;
+  } catch (err) {
+    consol.log(arr);
+    return false;
+  }
+};
+
 module.exports = {
   createGroup,
   getGroups,
   addMember,
+  leaveGroup,
 };
