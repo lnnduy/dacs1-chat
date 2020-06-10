@@ -1,5 +1,5 @@
 import React from "react";
-import { useMediaQuery, Avatar } from "@material-ui/core";
+import { useMediaQuery } from "@material-ui/core";
 import { Flex } from "@fluentui/react-northstar";
 import { useSelector } from "react-redux";
 

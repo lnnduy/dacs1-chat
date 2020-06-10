@@ -50,7 +50,7 @@ function MainPage(props) {
         dispatch(updateGroups(groups));
       }
     });
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className={classes.chatContainer}>

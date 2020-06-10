@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useMediaQuery } from "@material-ui/core";
 import { Dropdown, Card, Flex } from "@fluentui/react-northstar";
 import { TeamCreateIcon } from "@fluentui/react-icons-northstar";

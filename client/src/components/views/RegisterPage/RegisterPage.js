@@ -3,7 +3,6 @@ import moment from "moment";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { registerUser } from "../../../functions/user";
-import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { TextField, Button } from "@material-ui/core";
 
@@ -17,21 +16,8 @@ const formItemLayout = {
     sm: { span: 16 },
   },
 };
-const tailFormItemLayout = {
-  wrapperCol: {
-    xs: {
-      span: 24,
-      offset: 0,
-    },
-    sm: {
-      span: 16,
-      offset: 8,
-    },
-  },
-};
 
 function RegisterPage(props) {
-  const dispatch = useDispatch();
   return (
     <Formik
       initialValues={{
