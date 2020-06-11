@@ -2,6 +2,7 @@ import { makeStyles } from "@material-ui/core";
 
 const largeScreenStyles = {
   title: {
+    padding: 15,
     gridArea: "chat-title",
     backgroundColor: "#fff",
     color: "#232323",
@@ -11,6 +12,19 @@ const largeScreenStyles = {
   contactTitle: {
     padding: 15,
     userSelect: "none",
+  },
+  avatar: {
+    border: "1px solid #00000050",
+    borderRadius: "100%",
+    padding: 5,
+    marginRight: 4,
+    backgroundColor: "white",
+  },
+  isAdmin: {
+    border: "2px solid #FFDF00",
+  },
+  isModerator: {
+    border: "2px solid #C0C0C0",
   },
 };
 

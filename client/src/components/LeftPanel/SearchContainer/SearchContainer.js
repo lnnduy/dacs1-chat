@@ -21,7 +21,7 @@ function SearchContainer(props) {
       {(isSmall && <div></div>) || (
         <>
           <Typography variant="subtitle2" noWrap>
-            {user?.name || ""}
+            {user?.name || "Đang tải..."}
           </Typography>
           <TextField
             id="search-bar"

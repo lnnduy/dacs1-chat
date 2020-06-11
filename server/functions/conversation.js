@@ -52,12 +52,29 @@ const populateConversationDatas = async (conversations) => {
   try {
     for (const conversation of conversations) {
       if (conversation.type === "GroupConversation") {
-        const group = await Group.findById(conversation.groupId).select([
+        let group = await Group.findById(conversation.groupId).select([
           "_id",
           "name",
           "avatar",
+          "admin",
+          "moderators",
         ]);
-        conversation.group = group;
+
+        if (group.admin.equals(conversation.userId))
+          conversation.role = "Admin";
+        else if (
+          group.moderators !== undefined &&
+          group.moderators.includes(conversation.userId)
+        )
+          conversation.role = "Moderator";
+        else conversation.role = "Member";
+
+        conversation.group = {
+          _id: group._id,
+          name: group.name,
+          avatar: group.avatar,
+        };
+
         delete conversation.groupId;
       }
       if (conversation.type === "PrivateConversation") {
