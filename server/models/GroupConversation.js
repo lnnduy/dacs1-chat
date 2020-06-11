@@ -11,7 +11,7 @@ const groupConversationSchema = Schema(
       ref: "group",
     },
     messages: {
-      type: Schema.Types.ObjectId || Object,
+      type: [Schema.Types.ObjectId || Object],
       ref: "message",
     },
     lastSeenAt: Date,

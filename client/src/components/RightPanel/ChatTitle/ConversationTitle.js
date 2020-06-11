@@ -38,14 +38,14 @@ function ConversationTitle(props) {
           <Flex fill vAlign="center">
             <Avatar
               className={classes.avatar}
-              src={selectedConversation.user.avatar}
+              src={selectedConversation.participant.avatar}
             />
             <Text
               size="large"
               weight="bold"
               content={
-                selectedConversation.user.name ||
-                selectedConversation.user.email
+                selectedConversation.participant.name ||
+                selectedConversation.participant.email
               }
             />
           </Flex>

@@ -5,15 +5,18 @@ import { useDispatch } from "react-redux";
 
 import useStyles from "./styles";
 import { selectConversation } from "../../../_actions/conversationActions";
+import LastMessage from "./LastMessage";
 
 function GroupConversation(props) {
-  const { conversation } = props;
+  const { conversation, isSelected } = props;
   const classes = useStyles(!useMediaQuery("(min-width:740px)"))(props);
   const dispatch = useDispatch();
 
   return (
     <Flex
-      className={classes.container}
+      className={
+        classes.container + " " + (isSelected ? classes.isSelected : "")
+      }
       onClick={() => dispatch(selectConversation(conversation))}
     >
       <Avatar
@@ -31,10 +34,11 @@ function GroupConversation(props) {
       <Flex column vAlign="center">
         <Text
           truncated
-          size="small"
-          weight="semibold"
+          size="medium"
+          weight="bold"
           content={conversation.group.name}
         />
+        <LastMessage message={conversation.lastMessage} />
       </Flex>
     </Flex>
   );

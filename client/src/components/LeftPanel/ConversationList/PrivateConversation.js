@@ -5,25 +5,34 @@ import { useDispatch } from "react-redux";
 
 import useStyles from "./styles";
 import { selectConversation } from "../../../_actions/conversationActions";
+import LastMessage from "./LastMessage";
 
 function PrivateConversation(props) {
-  const { conversation } = props;
+  const { conversation, isSelected } = props;
   const classes = useStyles(!useMediaQuery("(min-width:740px)"))(props);
   const dispatch = useDispatch();
 
   return (
     <Flex
-      className={classes.container}
+      className={
+        classes.container + " " + (isSelected ? classes.isSelected : "")
+      }
       onClick={() => dispatch(selectConversation(conversation))}
     >
-      <Avatar src={conversation.user.avatar} className={classes.avatar} />
+      <Avatar
+        src={conversation.participant.avatar}
+        className={classes.avatar}
+      />
       <Flex column vAlign="center">
         <Text
           truncated
-          size="small"
-          weight="semibold"
-          content={conversation.user.name || conversation.user.email}
+          size="meduium"
+          weight="bold"
+          content={
+            conversation.participant.name || conversation.participant.email
+          }
         />
+        <LastMessage message={conversation.lastMessage} />
       </Flex>
     </Flex>
   );

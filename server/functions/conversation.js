@@ -2,6 +2,7 @@ const GroupConversation = require("../models/GroupConversation");
 const PrivateConversation = require("../models/PrivateConversation");
 const Group = require("../models/Group");
 const User = require("../models/User");
+const Message = require("../models/Message");
 
 const sortConversations = (conversations) => {
   conversations.sort((c1, c2) => {
@@ -74,19 +75,28 @@ const populateConversationDatas = async (conversations) => {
           name: group.name,
           avatar: group.avatar,
         };
-
         delete conversation.groupId;
       }
       if (conversation.type === "PrivateConversation") {
-        const user = await User.findById(conversation.userId).select([
-          "_id",
-          "name",
-          "email",
-          "avatar",
-        ]);
-        conversation.user = user;
-        delete conversation.userId;
+        const participant = await User.findById(
+          conversation.participantId
+        ).select(["_id", "name", "email", "avatar"]);
+        conversation.participant = participant;
+        delete conversation.participantId;
       }
+
+      const lastMessage = (
+        await Message.findById(conversation.messages[0])
+      ).toObject();
+      const sender = await User.findById(lastMessage.sender).select([
+        "name",
+        "email",
+      ]);
+      lastMessage.sender = sender;
+
+      conversation.lastMessage = lastMessage;
+
+      delete conversation.messages;
     }
 
     return conversations;
