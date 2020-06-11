@@ -40,8 +40,15 @@ function FriendCard(props) {
             align="end"
             content={
               <Flex column hAlign="start">
-                <Button text content="Chặn" secondary icon={<BanIcon />} />
                 <Button
+                  fluid
+                  text
+                  content="Chặn"
+                  secondary
+                  icon={<BanIcon />}
+                />
+                <Button
+                  fluid
                   text
                   content="Huỷ kết bạn"
                   secondary

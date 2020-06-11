@@ -65,6 +65,7 @@ app.use((req, res, next) => {
 
 app.use("/api/users", require("./routes/users"));
 app.use("/api/groups", require("./routes/group"));
+app.use("/api/conversations", require("./routes/conversation"));
 
 app.use("/uploads", express.static("uploads"));
 

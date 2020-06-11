@@ -12,6 +12,7 @@ const messageSchema = Schema(
       type: Date,
       default: Date.now(),
     },
+    status: String,
   },
   {
     versionKey: false,

@@ -9,12 +9,14 @@ import {
   loadContacts,
 } from "../../../functions/contact";
 import { loadGroups } from "../../../functions/group";
+import { loadConversations } from "../../../functions/conversation";
 import {
   updateAddContactRequestsReceived,
   updateAddContactRequestsSent,
   updateContacts,
 } from "../../../_actions/contactActions";
 import { updateGroups } from "../../../_actions/groupActions";
+import { updateConversations } from "../../../_actions/conversationActions";
 
 import LeftPanel from "../../LeftPanel/LeftPanel";
 import RightPanel from "../../RightPanel/RightPanel";
@@ -48,6 +50,12 @@ function MainPage(props) {
       if (data.success) {
         const groups = data.data;
         dispatch(updateGroups(groups));
+      }
+    });
+    loadConversations().then((data) => {
+      if (data.success) {
+        const conversations = data.data;
+        dispatch(updateConversations(conversations));
       }
     });
   }, [dispatch]);

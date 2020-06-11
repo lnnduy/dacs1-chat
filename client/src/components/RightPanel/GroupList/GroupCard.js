@@ -81,6 +81,7 @@ function GroupCard(props) {
               <Flex column hAlign="start">
                 {group.role === ROLES.MEMBER && (
                   <Button
+                    fluid
                     text
                     content="Rời nhóm"
                     secondary
@@ -91,6 +92,7 @@ function GroupCard(props) {
                 {(group.role === ROLES.MODERATOR ||
                   group.role === ROLES.ADMIN) && (
                   <Button
+                    fluid
                     text
                     content="Thêm thành viên"
                     secondary
@@ -100,6 +102,7 @@ function GroupCard(props) {
                 )}
                 {group.role === ROLES.ADMIN && (
                   <Button
+                    fluid
                     text
                     content="Xoá nhóm"
                     secondary
