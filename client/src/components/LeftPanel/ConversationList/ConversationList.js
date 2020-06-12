@@ -8,7 +8,7 @@ import PrivateConversation from "./PrivateConversation";
 
 function ConversationList(props) {
   const classes = useStyles(!useMediaQuery("(min-width:740px)"))(props);
-  const { conversations, selectedConversation } = useSelector(
+  const { conversations, selectedConversationIdx } = useSelector(
     (store) => store.conversation
   );
 
@@ -16,7 +16,7 @@ function ConversationList(props) {
     <div className={classes.conversationList}>
       {conversations.map((c, i) => {
         const isSelected =
-          selectedConversation !== null && c._id === selectedConversation._id;
+          selectedConversationIdx !== null && c._id === selectedConversationIdx;
         if (c.type === "GroupConversation")
           return (
             <GroupConversation

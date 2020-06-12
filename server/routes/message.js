@@ -7,11 +7,10 @@ const {
 
 router.get("/groupConversations/:conversationId", auth, async (req, res) => {
   try {
-    const userId = req.user._id;
     const { conversationId } = req.params;
     const { page } = req.query;
 
-    const result = await getGroupMessages(userId, conversationId, page);
+    const result = await getGroupMessages(conversationId, page);
 
     res.ok(result);
   } catch (err) {
@@ -22,11 +21,10 @@ router.get("/groupConversations/:conversationId", auth, async (req, res) => {
 
 router.get("/privateConversations/:conversationId", auth, async (req, res) => {
   try {
-    const userId = req.user._id;
     const { conversationId } = req.params;
     const { page } = req.query;
 
-    const result = await getPrivateMessages(userId, conversationId, page);
+    const result = await getPrivateMessages(conversationId, page);
 
     res.ok(result);
   } catch (err) {

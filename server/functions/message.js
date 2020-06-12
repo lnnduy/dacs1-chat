@@ -4,7 +4,7 @@ const PrivateConversation = require("../models/PrivateConversation");
 const User = require("../models/User");
 const Group = require("../models/Group");
 
-const getMessages = async (userId, conversation, page) => {
+const getMessages = async (conversation, page) => {
   try {
     conversation = conversation.toObject();
     conversation.messages = conversation.messages || [];
@@ -18,15 +18,12 @@ const getMessages = async (userId, conversation, page) => {
     ) {
       const promise = Message.findById(conversation.messages[i]).then(
         async (m) => {
-          console.log(m);
           m.sender = await User.findById(m.sender).select([
             "_id",
             "name",
             "avatar",
             "email",
           ]);
-          if (m.sender === userId) m.isMe = true;
-          else m.isMe = false;
           return m;
         }
       );
@@ -51,28 +48,28 @@ const getMessages = async (userId, conversation, page) => {
   }
 };
 
-const getGroupMessages = async (userId, conversationId, page) => {
+const getGroupMessages = async (conversationId, page) => {
   try {
     let conversation = await GroupConversation.findById(conversationId);
 
     if (conversation === null)
       return { page: +page || 0, totalPages: 0, messages: [] };
-    const result = await getMessages(userId, conversation, +page);
 
+    const result = await getMessages(conversation, +page);
     return result;
   } catch (err) {
     console.log(err);
-    return { page, totalPages: 0, messages: [] };
+    return { page: 0, totalPages: 0, messages: [] };
   }
 };
 
-const getPrivateMessages = async (userId, conversationId, page) => {
+const getPrivateMessages = async (conversationId, page) => {
   try {
     let conversation = await PrivateConversation.findById(conversationId);
 
     if (conversation === null)
       return { page: +page || 0, totalPages: 0, messages: [] };
-    const result = await getMessages(userId, conversation, +page);
+    const result = await getMessages(conversation, +page);
 
     return result;
   } catch (err) {

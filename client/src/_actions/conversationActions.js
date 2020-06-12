@@ -1,4 +1,8 @@
-import { UPDATE_CONVERSATIONS, SELECT_CONVERSATION } from "./types";
+import {
+  UPDATE_CONVERSATIONS,
+  SELECT_CONVERSATION,
+  UPDATE_MESSAGES,
+} from "./types";
 
 export const updateConversations = (conversations) => {
   return {
@@ -7,9 +11,16 @@ export const updateConversations = (conversations) => {
   };
 };
 
-export const selectConversation = (conversation) => {
+export const selectConversation = (conversationId) => {
   return {
     type: SELECT_CONVERSATION,
-    payload: conversation,
+    payload: conversationId,
+  };
+};
+
+export const updateMessages = (conversationId, messages, totalPages, page) => {
+  return {
+    type: UPDATE_MESSAGES,
+    payload: { conversationId, messages, totalPages, page },
   };
 };

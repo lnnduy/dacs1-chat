@@ -17,7 +17,7 @@ function PrivateConversation(props) {
       className={
         classes.container + " " + (isSelected ? classes.isSelected : "")
       }
-      onClick={() => dispatch(selectConversation(conversation))}
+      onClick={() => dispatch(selectConversation(conversation._id))}
     >
       <Avatar
         src={conversation.participant.avatar}
@@ -26,7 +26,7 @@ function PrivateConversation(props) {
       <Flex column vAlign="center">
         <Text
           truncated
-          size="meduium"
+          size="medium"
           weight="bold"
           content={
             conversation.participant.name || conversation.participant.email

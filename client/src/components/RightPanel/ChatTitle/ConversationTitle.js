@@ -8,44 +8,49 @@ import useStyles from "./styles";
 function ConversationTitle(props) {
   const isSmall = !useMediaQuery("(min-width:740px)");
   const classes = useStyles(isSmall)(props);
-  const { selectedConversation } = useSelector((store) => store.conversation);
+  const { selectedConversationIdx, conversations } = useSelector(
+    (store) => store.conversation
+  );
 
+  console.log(conversations[selectedConversationIdx]);
   return (
-    (selectedConversation !== null && (
+    (selectedConversationIdx !== null && (
       <div className={classes.title}>
-        {selectedConversation.type === "GroupConversation" && (
+        {conversations[selectedConversationIdx].type ===
+          "GroupConversation" && (
           <Flex fill vAlign="center">
             <Avatar
               className={
                 classes.avatar +
                 " " +
-                (selectedConversation.role === "Admin"
+                (conversations[selectedConversationIdx]?.role === "Admin"
                   ? classes.isAdmin
-                  : selectedConversation.role === "Moderator"
+                  : conversations[selectedConversationIdx]?.role === "Moderator"
                   ? classes.isModerator
                   : "")
               }
-              src={selectedConversation.group.avatar}
+              src={conversations[selectedConversationIdx]?.group.avatar}
             />
             <Text
               size="large"
               weight="bold"
-              content={selectedConversation.group.name}
+              content={conversations[selectedConversationIdx]?.group.name}
             />
           </Flex>
         )}
-        {selectedConversation.type === "PrivateConversation" && (
+        {conversations[selectedConversationIdx]?.type ===
+          "PrivateConversation" && (
           <Flex fill vAlign="center">
             <Avatar
               className={classes.avatar}
-              src={selectedConversation.participant.avatar}
+              src={conversations[selectedConversationIdx]?.participant.avatar}
             />
             <Text
               size="large"
               weight="bold"
               content={
-                selectedConversation.participant.name ||
-                selectedConversation.participant.email
+                conversations[selectedConversationIdx]?.participant.name ||
+                conversations[selectedConversationIdx]?.participant.email
               }
             />
           </Flex>

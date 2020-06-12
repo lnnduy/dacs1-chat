@@ -17,7 +17,7 @@ function GroupConversation(props) {
       className={
         classes.container + " " + (isSelected ? classes.isSelected : "")
       }
-      onClick={() => dispatch(selectConversation(conversation))}
+      onClick={() => dispatch(selectConversation(conversation._id))}
     >
       <Avatar
         src={conversation.group.avatar}

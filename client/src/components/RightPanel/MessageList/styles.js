@@ -4,6 +4,7 @@ const largeScreenStyles = {
   messageList: {
     gridArea: "chat-message-list",
     borderLeft: "1px solid rgba(0, 0, 0, 0.1)",
+    overflow: "auto",
   },
 };
 
