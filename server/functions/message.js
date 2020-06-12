@@ -4,18 +4,12 @@ const PrivateConversation = require("../models/PrivateConversation");
 const User = require("../models/User");
 const Group = require("../models/Group");
 
-const getGroupMessages = async (userId, conversationId, page) => {
+const getMessages = async (userId, conversation, page) => {
   try {
-    let conversation = await GroupConversation.findById(conversationId);
-
-    if (conversation === null)
-      return { page: +page, totalPages: 0, messages: [] };
-
     conversation = conversation.toObject();
     conversation.messages = conversation.messages || [];
 
     page = page || 1;
-
     const promises = [];
     for (
       let i = 20 * (+page - 1);
@@ -57,6 +51,37 @@ const getGroupMessages = async (userId, conversationId, page) => {
   }
 };
 
+const getGroupMessages = async (userId, conversationId, page) => {
+  try {
+    let conversation = await GroupConversation.findById(conversationId);
+
+    if (conversation === null)
+      return { page: +page || 0, totalPages: 0, messages: [] };
+    const result = await getMessages(userId, conversation, +page);
+
+    return result;
+  } catch (err) {
+    console.log(err);
+    return { page, totalPages: 0, messages: [] };
+  }
+};
+
+const getPrivateMessages = async (userId, conversationId, page) => {
+  try {
+    let conversation = await PrivateConversation.findById(conversationId);
+
+    if (conversation === null)
+      return { page: +page || 0, totalPages: 0, messages: [] };
+    const result = await getMessages(userId, conversation, +page);
+
+    return result;
+  } catch (err) {
+    console.log(err);
+    return { page, totalPages: 0, messages: [] };
+  }
+};
+
 module.exports = {
   getGroupMessages,
+  getPrivateMessages,
 };
