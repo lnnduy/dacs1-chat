@@ -8,7 +8,7 @@ const messageSchema = Schema(
     },
     type: String,
     content: String,
-    sendAt: {
+    sentAt: {
       type: Date,
       default: Date.now(),
     },

@@ -2,7 +2,6 @@ const Message = require("../models/Message");
 const GroupConversation = require("../models/GroupConversation");
 const PrivateConversation = require("../models/PrivateConversation");
 const User = require("../models/User");
-const Group = require("../models/Group");
 
 const getMessages = async (conversation, page) => {
   try {
@@ -31,6 +30,11 @@ const getMessages = async (conversation, page) => {
     }
 
     const messages = await Promise.all(promises);
+
+    messages.sort((m1, m2) =>
+      m1.sentAt > m2.sentAt ? 1 : m1.sentAt < m2.sentAt ? -1 : 0
+    );
+
     const totalPages =
       Math.floor(conversation.messages.length / 20) +
       (conversation.messages.length % 20 !== 0 ? 1 : 0);

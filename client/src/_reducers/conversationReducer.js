@@ -39,7 +39,7 @@ const reducer = (
             Math.max(conversation.totalLoadedPages, page)) ||
           0,
         totalPages,
-        messages: [...messages, conversation.messages],
+        messages: [...messages, ...(conversation.messages || [])],
       };
       conversations.splice(conversationIndex, 1, conversation);
       state = {

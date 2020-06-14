@@ -10,7 +10,7 @@ const largeScreenStyles = {
     padding: 10,
     overflow: "hidden",
     "&:hover": {
-      backgroundColor: "#f0f0f0",
+      backgroundColor: "#f5f5f5",
       cursor: "pointer",
     },
   },

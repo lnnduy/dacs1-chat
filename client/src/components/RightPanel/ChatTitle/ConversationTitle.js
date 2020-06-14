@@ -12,7 +12,6 @@ function ConversationTitle(props) {
     (store) => store.conversation
   );
 
-  console.log(conversations[selectedConversationIdx]);
   return (
     (selectedConversationIdx !== null && (
       <div className={classes.title}>
