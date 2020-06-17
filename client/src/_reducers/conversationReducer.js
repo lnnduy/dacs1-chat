@@ -2,6 +2,10 @@ import {
   UPDATE_CONVERSATIONS,
   SELECT_CONVERSATION,
   UPDATE_MESSAGES,
+  CLEAR_CONVERSATION,
+  SEND_MESSAGE,
+  NEW_CONVERSATION,
+  RECEIVED_MESSAGE,
 } from "../_actions/types";
 
 const reducer = (
@@ -49,9 +53,47 @@ const reducer = (
       };
 
       return state;
+    case CLEAR_CONVERSATION:
+      return {
+        conversations: [],
+        selectedConversationIdx: null,
+        loadedConversations: [],
+      };
+    case SEND_MESSAGE:
+      state = { ...sendMessage(state, action) };
+      return state;
+    case RECEIVED_MESSAGE:
+      state = { ...sendMessage(state, action) };
+      return state;
+    case NEW_CONVERSATION:
+      state = {
+        ...state,
+        conversations: [action.payload, ...state.conversations],
+      };
+      return state;
     default:
       return state;
   }
 };
 
 export default reducer;
+
+const sendMessage = (state, action) => {
+  const conversations = state.conversations;
+
+  const conversationIndex = conversations.findIndex((c) => {
+    return c._id === action.payload.conversationId;
+  });
+  let conversation = conversations[conversationIndex];
+
+  conversation = {
+    ...conversation,
+    messages: [...(conversation.messages || []), action.payload.message],
+    lastMessage: action.payload.message,
+  };
+  conversations.splice(conversationIndex, 1, conversation);
+
+  state = { ...state, conversations };
+
+  return state;
+};

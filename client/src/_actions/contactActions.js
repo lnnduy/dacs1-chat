@@ -8,6 +8,7 @@ import {
   DECLINE_ADD_CONTACT_REQUEST_SUCCESS,
   RECEIVED_ADD_CONTACT_REQUEST,
   ADD_NEW_CONTACT,
+  CLEAR_CONTACT,
 } from "./types";
 
 export function sendAddContactRequestSuccess(request) {
@@ -44,4 +45,8 @@ export function receivedAddContactRequest(request) {
 
 export function addNewContact(contact) {
   return { type: ADD_NEW_CONTACT, payload: contact };
+}
+
+export function clearContact() {
+  return { type: CLEAR_CONTACT };
 }

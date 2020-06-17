@@ -27,7 +27,6 @@ function MessageSection(props) {
             className={isMe ? classes.myAvatar : classes.senderAvatar}
             src={sender.avatar}
           />
-
           <Message
             message={messages[0]}
             isMe={isMe}
@@ -36,7 +35,7 @@ function MessageSection(props) {
         </Flex>
         {messages.map((m, i) =>
           i > 0 ? (
-            <Flex hAlign={isMe ? "end" : "start"}>
+            <Flex key={i} hAlign={isMe ? "end" : "start"}>
               <Message
                 key={i}
                 message={m}

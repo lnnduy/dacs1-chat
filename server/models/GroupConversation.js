@@ -2,11 +2,11 @@ const { Schema, model } = require("mongoose");
 
 const groupConversationSchema = Schema(
   {
-    user: {
+    userId: {
       type: Schema.Types.ObjectId,
       ref: "user",
     },
-    group: {
+    groupId: {
       type: Schema.Types.ObjectId,
       ref: "group",
     },

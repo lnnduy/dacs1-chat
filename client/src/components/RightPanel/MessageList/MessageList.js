@@ -8,6 +8,7 @@ import {
   loadPrivateMessages,
 } from "../../../functions/message";
 import { updateMessages } from "../../../_actions/conversationActions";
+import scrollMessageViewToBottom from "../../../shared/scrollMessageViewToBottom";
 import formater from "./formater";
 import MessageSection from "./MessageSection";
 
@@ -34,7 +35,7 @@ function MessageList(props) {
       conversations[selectedConversationIdx] === undefined ||
       loadedConversations.includes(conversations[selectedConversationIdx]._id)
     ) {
-      scrollToBottom();
+      scrollMessageViewToBottom();
       return;
     }
 
@@ -51,7 +52,7 @@ function MessageList(props) {
                 page
               )
             );
-            scrollToBottom();
+            scrollMessageViewToBottom();
           }
         })
         .catch((err) => console.log(err));
@@ -68,7 +69,7 @@ function MessageList(props) {
                 page
               )
             );
-            scrollToBottom();
+            scrollMessageViewToBottom();
           }
         })
         .catch((err) => console.log(err));
@@ -76,7 +77,7 @@ function MessageList(props) {
 
   return (
     (conversations[selectedConversationIdx] !== undefined && (
-      <div id="message-list" className={classes.messageList} ref={container}>
+      <div id="message-list" className={classes.messageList}>
         {formater(conversations[selectedConversationIdx].messages).map(
           (section, i) => (
             <MessageSection key={i} messageSection={section} />

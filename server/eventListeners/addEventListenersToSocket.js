@@ -8,6 +8,9 @@ const {
   deleteGroup,
 } = require("../eventHandlers/groupEventHandlers");
 const { userStartedSocket, userStoppedSocket } = require("../functions/user");
+const {
+  sendGroupMessage,
+} = require("../eventHandlers/conversationEventHandlers");
 
 const addEventListenersToSocket = (io, socket) => {
   socket.on("sendUserIdToServer", function ({ userId }) {
@@ -27,6 +30,16 @@ const addEventListenersToSocket = (io, socket) => {
   });
   socket.on("deleteGroup", function ({ userId, groupId }) {
     deleteGroup(io)(userId, groupId);
+  });
+  socket.on("sendGroupMessage", function ({ userId, conversationId, message }) {
+    sendGroupMessage(io)(userId, conversationId, message);
+  });
+  socket.on("sendPrivateMessage", function ({
+    userId,
+    conversationId,
+    message,
+  }) {
+    sendPrivateMessage(io)(userId, conversationId, message);
   });
   socket.on("disconnect", function () {
     userStoppedSocket(socket.id);

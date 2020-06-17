@@ -1,4 +1,4 @@
-import { SELECT_MENU } from "./types";
+import { SELECT_MENU, CLEAR_LEFT_MENU } from "./types";
 
 export const selectMenuItem = (menuCode) => {
   return {
@@ -6,3 +6,7 @@ export const selectMenuItem = (menuCode) => {
     payload: menuCode,
   };
 };
+
+export function clearLeftMenu() {
+  return { type: CLEAR_LEFT_MENU };
+}

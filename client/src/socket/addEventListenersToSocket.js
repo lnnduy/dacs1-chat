@@ -8,6 +8,10 @@ import {
   handleDeleteGroup,
 } from "./eventListeners/groupEvents";
 import { auth } from "../functions/user";
+import {
+  handleReceivedMessage,
+  handleNewConversation,
+} from "./eventListeners/conversationEvents";
 
 const addEventListenersToSocket = (socket) => {
   socket.on("receivedAddContactRequest", handleReceivedAddContactRequest);
@@ -15,6 +19,8 @@ const addEventListenersToSocket = (socket) => {
   socket.on("addGroup", handleAddGroup);
   socket.on("leaveGroup", handleLeaveGroup);
   socket.on("deleteGroup", handleDeleteGroup);
+  socket.on("newConversation", handleNewConversation);
+  socket.on("receivedMessage", handleReceivedMessage);
 
   socket.on("serverRequestUserId", async () => {
     const user = await auth();

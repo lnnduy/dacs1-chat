@@ -4,6 +4,7 @@ import {
   ADD_GROUP,
   REMOVE_GROUP,
   MEMBER_LEAVE_GROUP,
+  CLEAR_GROUP,
 } from "./types";
 
 export const addMemberSuccess = (groupId) => {
@@ -25,3 +26,7 @@ export const removeGroup = (groupId) => {
 export const memberLeaveGroup = (groupId) => {
   return { type: MEMBER_LEAVE_GROUP, payload: groupId };
 };
+
+export function clearGroup() {
+  return { type: CLEAR_GROUP };
+}

@@ -8,6 +8,7 @@ import {
   DECLINE_ADD_CONTACT_REQUEST_SUCCESS,
   RECEIVED_ADD_CONTACT_REQUEST,
   ADD_NEW_CONTACT,
+  CLEAR_CONTACT,
 } from "../_actions/types";
 
 export default function (
@@ -97,6 +98,8 @@ export default function (
         sentRequests: [...sentRequestsWithAcceptedRequest],
       };
       return state;
+    case CLEAR_CONTACT:
+      return { sentRequests: [], receivedRequests: [], contacts: [] };
     default:
       return state;
   }

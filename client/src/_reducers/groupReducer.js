@@ -4,6 +4,7 @@ import {
   ADD_GROUP,
   REMOVE_GROUP,
   MEMBER_LEAVE_GROUP,
+  CLEAR_GROUP,
 } from "../_actions/types";
 
 export default function (state = [], action) {
@@ -52,6 +53,8 @@ export default function (state = [], action) {
       groups.splice(groupIndex, 1, group);
       state = [...groups];
       return state;
+    case CLEAR_GROUP:
+      return [];
     default:
       return state;
   }
