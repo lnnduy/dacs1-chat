@@ -70,7 +70,7 @@ function GroupList(props) {
           >
             <Flex hAlign="center" vAlign="center" fill>
               <Card.Body fitted>
-                <TeamCreateIcon size="large" color="teal" />
+                <TeamCreateIcon size="largest" color="teal" />
               </Card.Body>
             </Flex>
           </Card>

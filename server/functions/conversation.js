@@ -127,6 +127,36 @@ const getConversations = async (userId) => {
   }
 };
 
+const deleteGroupConversation = async (userId, conversationId) => {
+  try {
+    await GroupConversation.deleteMany({
+      userId: userId,
+      _id: conversationId,
+    });
+
+    return true;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+const deletePrivateConversation = async (userId, conversationId) => {
+  try {
+    await PrivateConversation.deleteMany({
+      userId: userId,
+      _id: conversationId,
+    });
+
+    return true;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
 module.exports = {
   getConversations,
+  deletePrivateConversation,
+  deleteGroupConversation,
 };

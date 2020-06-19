@@ -50,6 +50,7 @@ const largeScreenStyles = {
       backgroundColor: "#00808010",
     },
     width: 200,
+    height: 104.4,
   },
   btnMore: {
     position: "absolute",

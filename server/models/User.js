@@ -19,10 +19,6 @@ const userSchema = Schema(
       type: String,
       minglength: 5,
     },
-    role: {
-      type: Number,
-      default: 0,
-    },
     avatar: String,
     token: {
       type: String,

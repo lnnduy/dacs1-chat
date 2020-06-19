@@ -6,6 +6,7 @@ import {
   SEND_MESSAGE,
   NEW_CONVERSATION,
   RECEIVED_MESSAGE,
+  START_CONVERSATION,
 } from "./types";
 
 export const updateConversations = (conversations) => {
@@ -43,4 +44,8 @@ export function receivedMessage(conversationId, message) {
 
 export function newConversation(conversation) {
   return { type: NEW_CONVERSATION, payload: conversation };
+}
+
+export function startConversation(conversation) {
+  return { type: START_CONVERSATION, payload: conversation };
 }

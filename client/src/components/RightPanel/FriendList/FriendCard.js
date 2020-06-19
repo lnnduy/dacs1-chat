@@ -12,6 +12,7 @@ import {
 import { Avatar, useMediaQuery } from "@material-ui/core";
 
 import useStyles from "./styles";
+import { startConversation } from "../../../_actions/conversationActions";
 
 function FriendCard(props) {
   const { friend } = props;
@@ -78,6 +79,20 @@ function FriendCard(props) {
               />
             </Flex>
           </Flex>
+          <Button
+            style={{ marginTop: 10 }}
+            styles={{
+              borderColor: "#00aaff",
+              color: "#00aaff",
+              "&:hover": {
+                borderColor: "#00aaff",
+                color: "#00aaff",
+                backgroundColor: "#00aaff12",
+              },
+            }}
+            content="Nhắn tin"
+            onClick={() => startConversation(friend._id)}
+          />
         </Card.Body>
       </Card>
     </div>

@@ -35,7 +35,7 @@ function ChatForm(props) {
         sendMessage(conversations[selectedConversationIdx]._id, message)
       );
       socketEmit(
-        conversations.type === "PrivateConversation"
+        conversations[selectedConversationIdx].type === "PrivateConversation"
           ? "sendPrivateMessage"
           : "sendGroupMessage",
         {

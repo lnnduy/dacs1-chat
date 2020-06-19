@@ -2,11 +2,11 @@ const { Schema, model } = require("mongoose");
 
 const privateConversationSchema = Schema(
   {
-    user: {
+    userId: {
       type: Schema.Types.ObjectId,
       ref: "user",
     },
-    participant: {
+    participantId: {
       type: Schema.Types.ObjectId,
       ref: "user",
     },

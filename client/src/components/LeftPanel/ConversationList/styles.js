@@ -9,6 +9,7 @@ const largeScreenStyles = {
   container: {
     padding: 10,
     overflow: "hidden",
+    position: "relative",
     "&:hover": {
       backgroundColor: "#f5f5f5",
       cursor: "pointer",
@@ -29,6 +30,11 @@ const largeScreenStyles = {
   },
   isModerator: {
     border: "2px solid #C0C0C0",
+  },
+  btnMore: {
+    position: "absolute",
+    right: 5,
+    top: 5,
   },
 };
 

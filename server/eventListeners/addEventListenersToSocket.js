@@ -10,6 +10,7 @@ const {
 const { userStartedSocket, userStoppedSocket } = require("../functions/user");
 const {
   sendGroupMessage,
+  sendPrivateMessage,
 } = require("../eventHandlers/conversationEventHandlers");
 
 const addEventListenersToSocket = (io, socket) => {

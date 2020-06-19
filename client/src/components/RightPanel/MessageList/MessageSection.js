@@ -12,6 +12,7 @@ function MessageSection(props) {
   const classes = useStyles(isSmall)(props);
   const { messageSection } = props;
   const { sender, messages } = messageSection;
+  console.log(messageSection);
   const { user } = useSelector((store) => store.user);
   const isMe = sender._id === user._id;
 

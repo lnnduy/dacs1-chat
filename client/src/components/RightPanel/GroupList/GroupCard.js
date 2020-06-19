@@ -21,6 +21,7 @@ import AddMemberDialog from "./AddMemberDialog";
 import { addMemberSuccess, removeGroup } from "../../../_actions/groupActions";
 import { leaveGroups, deleteGroups } from "../../../functions/group";
 import { socketEmit } from "../../../socket";
+import { startConversation } from "../../../_actions/conversationActions";
 
 const ROLES = {
   ADMIN: "Admin",
@@ -146,6 +147,20 @@ function GroupCard(props) {
               />
             </Flex>
           </Flex>
+          <Button
+            style={{ marginTop: 10 }}
+            styles={{
+              borderColor: "#00aaff",
+              color: "#00aaff",
+              "&:hover": {
+                borderColor: "#00aaff",
+                color: "#00aaff",
+                backgroundColor: "#00aaff12",
+              },
+            }}
+            content="Nhắn tin"
+            onClick={() => startConversation(group._id)}
+          />
         </Card.Body>
       </Card>
 
