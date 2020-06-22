@@ -85,9 +85,14 @@ const populateConversationDatas = async (conversations) => {
         delete conversation.participantId;
       }
 
-      const lastMessage = (
-        await Message.findById(conversation.messages[0])
-      ).toObject();
+      let lastMessage = await Message.findById(conversation.messages[0]);
+
+      if (lastMessage === null) {
+        conversation.lastMessage = null;
+        continue;
+      }
+
+      lastMessage = lastMessage.toObject();
       const sender = await User.findById(lastMessage.sender).select([
         "name",
         "email",
@@ -155,8 +160,70 @@ const deletePrivateConversation = async (userId, conversationId) => {
   }
 };
 
+const createGroupConversation = async (userId, groupId) => {
+  try {
+    const newConversation = new GroupConversation();
+    const group = Group.findById(groupId).select(["_id", "name", "avatar"]);
+
+    if (group === null) return false;
+
+    newConversation.userId = userId;
+    newConversation.groupId = groupId;
+    newConversation.lastActivityAt = new Date().toISOString();
+    newConversation.lastSeenAt = new Date().toISOString();
+    newConversation.messages = [];
+
+    const conversation = newConversation.toObject();
+
+    conversation.group = group;
+    conversation.lastMessage = null;
+    delete conversation.groupId;
+
+    await newConversation.save();
+
+    return newConversation;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
+const createPrivateConversation = async (userId, participantId) => {
+  try {
+    const newConversation = new PrivateConversation();
+    const participant = User.findById(participantId).select([
+      "_id",
+      "name",
+      "avatar",
+    ]);
+
+    if (participant === null) return false;
+
+    newConversation.userId = userId;
+    newConversation.participantId = participantId;
+    newConversation.lastActivityAt = new Date().toISOString();
+    newConversation.lastSeenAt = new Date().toISOString();
+    newConversation.messages = [];
+
+    const conversation = newConversation.toObject();
+
+    conversation.participant = participant;
+    conversation.lastMessage = null;
+    delete conversation.participantId;
+
+    await newConversation.save();
+
+    return newConversation;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+};
+
 module.exports = {
   getConversations,
   deletePrivateConversation,
   deleteGroupConversation,
+  createGroupConversation,
+  createPrivateConversation,
 };

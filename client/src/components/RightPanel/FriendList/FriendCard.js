@@ -13,12 +13,14 @@ import { Avatar, useMediaQuery } from "@material-ui/core";
 
 import useStyles from "./styles";
 import { startConversation } from "../../../_actions/conversationActions";
+import { useDispatch } from "react-redux";
 
 function FriendCard(props) {
   const { friend } = props;
   const isSmall = !useMediaQuery("(min-width:740px)");
   const classes = useStyles(isSmall)(props);
   const [onMouseOver, setOnMouseOver] = useState(false);
+  const dispatch = useDispatch();
 
   return (
     <div
@@ -91,7 +93,9 @@ function FriendCard(props) {
               },
             }}
             content="Nhắn tin"
-            onClick={() => startConversation(friend._id)}
+            onClick={() =>
+              dispatch(startConversation({ participantId: friend._id }))
+            }
           />
         </Card.Body>
       </Card>

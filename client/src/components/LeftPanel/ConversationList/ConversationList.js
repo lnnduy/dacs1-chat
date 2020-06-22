@@ -16,7 +16,8 @@ function ConversationList(props) {
     <div className={classes.conversationList}>
       {conversations.map((c, i) => {
         const isSelected =
-          selectedConversationIdx !== null && c._id === selectedConversationIdx;
+          selectedConversationIdx !== null &&
+          c._id === conversations[selectedConversationIdx]._id;
         if (c.type === "GroupConversation")
           return (
             <GroupConversation

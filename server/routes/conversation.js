@@ -4,7 +4,37 @@ const {
   getConversations,
   deletePrivateConversation,
   deleteGroupConversation,
+  createGroupConversation,
+  createPrivateConversation,
 } = require("../functions/conversation");
+
+router.post("/groupConversations", auth, async (req, res) => {
+  const userId = req.user._id;
+  const { groupId } = req.body;
+
+  try {
+    const conversation = await createGroupConversation(userId, groupId);
+    if (conversation === false) res.badRequest();
+    else res.ok(conversation);
+  } catch (err) {
+    console.log(err);
+    res.internalServerError();
+  }
+});
+
+router.post("/privateConversations", auth, async (req, res) => {
+  const userId = req.user._id;
+  const { participantId } = req.body;
+
+  try {
+    const conversation = await createPrivateConversation(userId, participantId);
+    if (conversation === false) res.badRequest();
+    else res.ok(conversation);
+  } catch (err) {
+    console.log(err);
+    res.internalServerError();
+  }
+});
 
 router.get("/", auth, async (req, res) => {
   const userId = req.user._id;

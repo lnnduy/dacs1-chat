@@ -159,7 +159,7 @@ function GroupCard(props) {
               },
             }}
             content="Nhắn tin"
-            onClick={() => startConversation(group._id)}
+            onClick={() => dispatch(startConversation({ groupId: group._id }))}
           />
         </Card.Body>
       </Card>
