@@ -70,6 +70,7 @@ const reducer = (
         ...state,
         conversations: [action.payload, ...state.conversations],
       };
+      console.log(state);
       return state;
     default:
       return state;

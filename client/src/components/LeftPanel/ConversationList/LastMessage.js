@@ -14,7 +14,7 @@ function LastMessage(props) {
           weight="semibold"
           size="small"
           content={
-            user._id === message.sender._id
+            user?._id === message.sender._id
               ? "Bạn: "
               : `${message.sender.name || "[NoName]"}: `
           }

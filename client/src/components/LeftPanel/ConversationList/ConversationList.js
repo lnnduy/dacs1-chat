@@ -11,6 +11,7 @@ function ConversationList(props) {
   const { conversations, selectedConversationIdx } = useSelector(
     (store) => store.conversation
   );
+  console.log(conversations);
 
   return (
     <div className={classes.conversationList}>
@@ -34,7 +35,7 @@ function ConversationList(props) {
               isSelected={isSelected}
             />
           );
-        return <></>;
+        return <div key={i}></div>;
       })}
     </div>
   );

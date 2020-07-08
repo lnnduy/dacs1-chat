@@ -70,15 +70,17 @@ export function startConversation(id) {
     }
     const conversationType =
       participantId === undefined
-        ? "proupConversations"
+        ? "groupConversations"
         : "privateConversations";
-    const _newConversation = await axios.post(
+    const request = await axios.post(
       `${CONVERSATION_SERVER}/${conversationType}`,
       {
         participantId,
         groupId,
       }
     );
+    const _newConversation = request.data.data;
+    console.log(_newConversation);
 
     dispatch(newConversation(_newConversation));
     dispatch(selectConversation(_newConversation._id));

@@ -162,58 +162,97 @@ const deletePrivateConversation = async (userId, conversationId) => {
 
 const createGroupConversation = async (userId, groupId) => {
   try {
-    const newConversation = new GroupConversation();
-    const group = Group.findById(groupId).select(["_id", "name", "avatar"]);
+    const group = await Group.findById(groupId).select([
+      "_id",
+      "name",
+      "avatar",
+    ]);
 
     if (group === null) return false;
+
+    const existsConversation = await GroupConversation.findOne({
+      userId: _userId,
+      groupId,
+    });
+
+    if (existsConversation != null) {
+      const conversation = existsConversation.toObject();
+
+      conversation.group = group;
+      conversation.type = "GroupConversation";
+      conversation.lastMessage = null;
+      delete conversation.groupId;
+
+      return conversation;
+    }
+
+    const newConversation = new GroupConversation();
 
     newConversation.userId = userId;
     newConversation.groupId = groupId;
     newConversation.lastActivityAt = new Date().toISOString();
     newConversation.lastSeenAt = new Date().toISOString();
     newConversation.messages = [];
+    await newConversation.save();
 
     const conversation = newConversation.toObject();
 
     conversation.group = group;
     conversation.lastMessage = null;
+    conversation.type = "GroupConversation";
     delete conversation.groupId;
 
-    await newConversation.save();
-
-    return newConversation;
+    return conversation;
   } catch (err) {
     console.log(err);
     return false;
   }
 };
 
-const createPrivateConversation = async (userId, participantId) => {
+const createPrivateConversation = async (_userId, participantId) => {
   try {
-    const newConversation = new PrivateConversation();
-    const participant = User.findById(participantId).select([
+    const participant = await User.findById(participantId).select([
       "_id",
       "name",
       "avatar",
+      "email",
     ]);
 
     if (participant === null) return false;
 
-    newConversation.userId = userId;
+    const existsConversation = await PrivateConversation.findOne({
+      userId: _userId,
+      participantId,
+    });
+
+    if (existsConversation != null) {
+      const conversation = existsConversation.toObject();
+
+      conversation.participant = participant;
+      conversation.type = "PrivateConversation";
+      conversation.lastMessage = null;
+      delete conversation.participantId;
+
+      return conversation;
+    }
+
+    const newConversation = new PrivateConversation();
+
+    newConversation.userId = _userId;
     newConversation.participantId = participantId;
     newConversation.lastActivityAt = new Date().toISOString();
     newConversation.lastSeenAt = new Date().toISOString();
     newConversation.messages = [];
+    await newConversation.save();
 
     const conversation = newConversation.toObject();
 
     conversation.participant = participant;
     conversation.lastMessage = null;
+    conversation.type = "PrivateConversation";
     delete conversation.participantId;
 
-    await newConversation.save();
-
-    return newConversation;
+    return conversation;
   } catch (err) {
     console.log(err);
     return false;

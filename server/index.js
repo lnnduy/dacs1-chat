@@ -14,6 +14,7 @@ const config = require("./config/key");
 const addEventListenersToSocket = require("./eventListeners/addEventListenersToSocket");
 
 io.on("connection", (socket) => {
+  console.log("1 user connected.");
   socket.emit("serverRequestUserId");
 
   addEventListenersToSocket(io, socket);

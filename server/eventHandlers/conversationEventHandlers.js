@@ -103,7 +103,6 @@ const addMessageToPrivateConversation = async (
 const sendGroupMessage = (io) => async (userId, conversationId, message) => {
   try {
     let conversation = await GroupConversation.findById(conversationId);
-    conversation = conversation.toObject();
 
     if (conversation === null) return;
 
@@ -122,6 +121,8 @@ const sendGroupMessage = (io) => async (userId, conversationId, message) => {
     const newMessage = new Message(message);
     newMessage.sentAt = new Date().toISOString();
     newMessage.save();
+    conversation.messages.push(newMessage._id);
+    await conversation.save();
 
     for (const member of members) {
       if (!member._id.equals(userId))
@@ -135,7 +136,6 @@ const sendGroupMessage = (io) => async (userId, conversationId, message) => {
 const sendPrivateMessage = (io) => async (userId, conversationId, message) => {
   try {
     let conversation = await PrivateConversation.findById(conversationId);
-    conversation = conversation.toObject();
 
     if (conversation === null) return;
 
@@ -146,6 +146,8 @@ const sendPrivateMessage = (io) => async (userId, conversationId, message) => {
     const newMessage = new Message(message);
     newMessage.sentAt = new Date().toISOString();
     newMessage.save();
+    conversation.messages.push(newMessage._id);
+    await conversation.save();
     addMessageToPrivateConversation(io, userId, participant._id, newMessage);
   } catch (err) {
     console.log(err);
